@@ -19,11 +19,7 @@ import torch
 from torch import nn
 
 from faultline.data import ANALOG_SIGNALS
-from faultline.failures import FIRST_FAILURE_START
-
-# Consecutive rows further apart than this are treated as a gap in the record.
-GAP_S = 60
-
+from faultline.failures import FIRST_FAILURE_START, GAP_S, assert_pre_failure
 
 @dataclass(frozen=True)
 class DetectorConfig:
@@ -51,18 +47,6 @@ class DetectorConfig:
     folds: int = 5
     seed: int = 7
     score_batch: int = 8192
-
-
-def assert_pre_failure(index: pd.DatetimeIndex | np.ndarray, what: str) -> None:
-    """Guard: fitting and tuning code may only ever see pre-failure timestamps."""
-    if len(index) == 0:
-        raise ValueError(f"{what}: no data")
-    latest = pd.Timestamp(np.max(np.asarray(index)))
-    if latest >= FIRST_FAILURE_START:
-        raise ValueError(
-            f"{what}: got data up to {latest}, but only data before "
-            f"{FIRST_FAILURE_START} (the first reported failure) may be used here"
-        )
 
 
 def segment_ids(index: pd.DatetimeIndex) -> np.ndarray:

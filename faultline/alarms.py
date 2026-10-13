@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from faultline.detector import GAP_S, assert_pre_failure
+from faultline.failures import GAP_S, assert_pre_failure
 
 # An active alarm clears once its condition has been absent for this much logged time.
 CLEAR_S = 3600

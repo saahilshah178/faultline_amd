@@ -17,6 +17,7 @@ it out.
 - Warning before the recorded maintenance: 77.7 h (F3), 11.1 h (F4).
 - False alarms per week after the first failure: Faultline 0.90, tuned static rules 1.13, envelope limits 0.00. Of Faultline's 16 false alarms, 8 fired during sustained compressor load on days with no failure report.
 - Detector training took 1613 s on `mps` (a local development run, not yet the MI300X).
+- Held-out second recording (MetroPT-2, nothing retuned): Faultline's first alarm F1 (air leak) 51 min after, F2 (oil leak) 48 min after, with 0.44 false alarms per week; tuned static rules F1 (air leak) 39 min after, F2 (oil leak) 41.8 h after, with 0.00.
 - Tokens per second and GPU cost per alert: not measured yet (needs the MI300X run).
 <!-- pitch:end -->
 

@@ -64,6 +64,28 @@ of failures and does not contain these 2020 dates or the maintenance times. We
 cite the paper for the description of the air production unit and its sensors,
 and the UCI record for the failure reports.
 
+## MetroPT-2 (held-out second test)
+
+- Source: Zenodo record 7766691, "MetroPT2: A Benchmark dataset for predictive
+  maintenance" (Veloso, Gama, Ribeiro, Pereira), CC BY 4.0.
+  https://doi.org/10.5281/zenodo.7766691
+- A later recording from the same operator: 2022-04-28 to 2022-07-28, logged
+  once a second, with the same fifteen signals as MetroPT-3 plus a flowmeter and
+  GPS. `FAULTLINE_DATASET=metropt2 uv run python -m faultline.data` downloads
+  `MetroPT2.csv` (1.2 GB) and keeps the first reading of every 10-second bin, so
+  the series has the same form as MetroPT-3. Stored as `data/metropt2.parquet`.
+- `failures_metropt2.csv` transcribes the failure table in the Zenodo record:
+
+| id | start | end | failure |
+|----|-------|-----|---------|
+| F1 | 2022-06-04 10:19:24 | 2022-06-04 14:22:39 | Air leak |
+| F2 | 2022-07-11 10:10:18 | 2022-07-14 10:22:08 | Oil leak |
+
+  The record gives no severity and no maintenance times.
+- Nothing about the detector, the baselines or the tuning procedure was chosen
+  with this dataset. It is run through the same code after the fact, trained
+  and tuned on its own data from before its first failure.
+
 References:
 
 - Davari, N., Veloso, B., Ribeiro, R., Gama, J. "MetroPT-3 Dataset." UCI Machine

@@ -14,12 +14,11 @@ import numpy as np
 import pandas as pd
 
 from faultline.alarms import _runs, to_seconds
-from faultline.config import REPO_ROOT, RESULTS_DIR
+from faultline.config import REPO_ROOT, RESULTS_DIR, SCORES_PATH
 from faultline.data import ANALOG_SIGNALS, DIGITAL_SIGNALS, load
 from faultline.eda import UNITS
 from faultline.evaluate import ALARMS_JSON, BENCH_JSON, faultline_score
 from faultline.profile import compressor_state, load_profile
-from faultline.train import SCORES_PATH
 
 ALERTS_DIR = RESULTS_DIR / "alerts"
 ASSET = "Air production unit (oil-lubricated compressor with twin-tower dryer), Porto metro train, MetroPT-3 recording"

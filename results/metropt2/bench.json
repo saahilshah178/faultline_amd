@@ -1,0 +1,1191 @@
+{
+  "generated_utc": "2026-10-13T08:42:01Z",
+  "dataset": {
+    "name": "MetroPT-2",
+    "source": "https://zenodo.org/records/7766691",
+    "license": "CC BY 4.0",
+    "rows": 705563,
+    "start": "2022-04-28 12:33:30",
+    "end": "2022-07-28 12:24:40",
+    "interval_s": 10
+  },
+  "protocol": {
+    "training_cutoff": "2022-06-04 10:19:24.300000",
+    "lead_horizon_h": 24,
+    "post_buffer_h": 24,
+    "alarm_clear_s": 3600,
+    "tuning": {
+      "data": "before 2022-06-04 10:19:24.300000",
+      "objective": "lowest mean delay to detect pre-failure sustained-load episodes",
+      "max_other_alarms": 2,
+      "delay_cap_s": 7200,
+      "sustained_load_min_s": 1200,
+      "loaded_current_a": 4.8,
+      "quantiles": [
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.85,
+        0.9,
+        0.925,
+        0.95,
+        0.96,
+        0.97,
+        0.98,
+        0.985,
+        0.99,
+        0.9925,
+        0.995,
+        0.9975,
+        0.999,
+        0.9995,
+        0.9999
+      ],
+      "durations_s": [
+        60,
+        120,
+        300,
+        600,
+        900,
+        1200,
+        1800
+      ]
+    },
+    "evaluation_period": {
+      "start": "2022-06-04 10:19:24",
+      "end": "2022-07-28 12:24:40",
+      "calendar_weeks": 6.844,
+      "observed_weeks": 6.155,
+      "excluded_hours": 148.3
+    }
+  },
+  "pre_failure_sustained_load_episodes": [],
+  "sustained_load_episodes_total": 2,
+  "training": {
+    "hardware": {
+      "device": "mps",
+      "torch": "2.14.1",
+      "hip": null,
+      "cuda": null,
+      "gpu_name": null,
+      "gpu_memory_gb": null
+    },
+    "trained_on_mi300x": false,
+    "train_seconds_total": 432.65,
+    "train_seconds_final_model": 79.53,
+    "score_windows_per_second": 192178.0,
+    "parameters": 89047,
+    "windows_scored": 688784,
+    "share_of_rows_scored": 0.9762,
+    "config": {
+      "window": 192,
+      "tail": 48,
+      "latent": 16,
+      "channels": [
+        32,
+        64,
+        64,
+        32
+      ],
+      "epochs": 20,
+      "batch_size": 1024,
+      "lr": 0.001,
+      "weight_decay": 1e-05,
+      "exclude_sustained_load": true,
+      "trim_fraction": 0.1,
+      "trim_warmup_epochs": 1,
+      "folds": 5,
+      "seed": 7,
+      "score_batch": 8192
+    },
+    "run": {
+      "finished_utc": "2026-10-13T08:37:41Z",
+      "host": "Saahils-MacBook-Pro.local",
+      "platform": "macOS-26.5.1-arm64-arm-64bit",
+      "git_commit": "1dc3d36",
+      "smoke": false
+    }
+  },
+  "methods": [
+    {
+      "key": "faultline",
+      "label": "Faultline (conv autoencoder)",
+      "kind": "detector",
+      "params": {
+        "threshold": 0.152368,
+        "threshold_quantile": 0.95,
+        "duration_s": 1200,
+        "smoothing": "2min"
+      },
+      "tuning": {
+        "feasible": true,
+        "proxies_detected": 0,
+        "proxies_total": 0,
+        "mean_delay_min": 120.0,
+        "other_alarms": 0
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "failure": "Air leak",
+          "window_start": "2022-06-04 10:19:24",
+          "window_end": "2022-06-04 14:22:39",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-06-04 11:10:40",
+          "lead_before_start_h": -0.854,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F2",
+          "failure": "Oil leak",
+          "window_start": "2022-07-11 10:10:18",
+          "window_end": "2022-07-14 10:22:08",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-07-11 10:57:50",
+          "lead_before_start_h": -0.792,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 2
+        }
+      ],
+      "summary": {
+        "failures_detected": 2,
+        "failures_missed": 0,
+        "detected_before_window_start": 0,
+        "median_lead_before_start_h": -0.823,
+        "alarms_total": 7,
+        "alarms_in_tuning_period": 0,
+        "false_alarms": 3,
+        "false_alarms_per_week": 0.438,
+        "false_alarms_per_observed_week": 0.487,
+        "false_alarms_during_sustained_load": 0
+      },
+      "alarms": [
+        {
+          "id": "A001",
+          "fire": "2022-06-04 11:10:40",
+          "onset": "2022-06-04 10:50:40",
+          "end": "2022-06-04 15:39:50",
+          "active_minutes": 269.2,
+          "attribution": "F1",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "Oil_temperature",
+              "share": 0.6912,
+              "error": 12.4894
+            },
+            {
+              "signal": "H1",
+              "share": 0.0913,
+              "error": 1.6505
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0868,
+              "error": 1.5682
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0572,
+              "error": 1.0335
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0548,
+              "error": 0.9909
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0105,
+              "error": 0.1904
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0081,
+              "error": 0.1462
+            }
+          ]
+        },
+        {
+          "id": "A002",
+          "fire": "2022-06-20 06:26:00",
+          "onset": "2022-06-20 06:06:00",
+          "end": "2022-06-20 06:31:30",
+          "active_minutes": 5.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Oil_temperature",
+              "share": 0.3881,
+              "error": 1.4609
+            },
+            {
+              "signal": "H1",
+              "share": 0.1532,
+              "error": 0.5766
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1458,
+              "error": 0.5488
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0969,
+              "error": 0.3649
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0796,
+              "error": 0.2995
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0691,
+              "error": 0.2601
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0674,
+              "error": 0.2536
+            }
+          ]
+        },
+        {
+          "id": "A003",
+          "fire": "2022-06-29 06:01:00",
+          "onset": "2022-06-29 05:41:00",
+          "end": "2022-06-29 06:09:20",
+          "active_minutes": 8.3,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3701,
+              "error": 1.7894
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.2264,
+              "error": 1.0948
+            },
+            {
+              "signal": "H1",
+              "share": 0.1499,
+              "error": 0.7248
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1331,
+              "error": 0.6435
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0438,
+              "error": 0.2117
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0431,
+              "error": 0.2084
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0335,
+              "error": 0.1621
+            }
+          ]
+        },
+        {
+          "id": "A004",
+          "fire": "2022-06-29 08:26:40",
+          "onset": "2022-06-29 08:06:40",
+          "end": "2022-06-29 08:32:30",
+          "active_minutes": 5.8,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Oil_temperature",
+              "share": 0.3845,
+              "error": 1.0415
+            },
+            {
+              "signal": "H1",
+              "share": 0.1753,
+              "error": 0.4748
+            },
+            {
+              "signal": "TP2",
+              "share": 0.146,
+              "error": 0.3953
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0895,
+              "error": 0.2423
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.077,
+              "error": 0.2085
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0741,
+              "error": 0.2008
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0536,
+              "error": 0.1452
+            }
+          ]
+        },
+        {
+          "id": "A005",
+          "fire": "2022-07-11 10:57:50",
+          "onset": "2022-07-11 10:37:50",
+          "end": "2022-07-12 16:52:50",
+          "active_minutes": 1795.0,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "TP3",
+              "share": 0.1876,
+              "error": 0.4825
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1861,
+              "error": 0.4786
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.1585,
+              "error": 0.4074
+            },
+            {
+              "signal": "H1",
+              "share": 0.1393,
+              "error": 0.3582
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1386,
+              "error": 0.3564
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1284,
+              "error": 0.3303
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0614,
+              "error": 0.158
+            }
+          ]
+        },
+        {
+          "id": "A006",
+          "fire": "2022-07-12 18:32:50",
+          "onset": "2022-07-12 18:12:50",
+          "end": "2022-07-13 20:17:50",
+          "active_minutes": 1545.0,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Motor_current",
+              "share": 0.2861,
+              "error": 1.1344
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1976,
+              "error": 0.7834
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1663,
+              "error": 0.6594
+            },
+            {
+              "signal": "H1",
+              "share": 0.1516,
+              "error": 0.6013
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0673,
+              "error": 0.2667
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0664,
+              "error": 0.2633
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0647,
+              "error": 0.2565
+            }
+          ]
+        },
+        {
+          "id": "A007",
+          "fire": "2022-07-14 10:27:00",
+          "onset": "2022-07-14 10:07:00",
+          "end": "2022-07-14 10:50:00",
+          "active_minutes": 23.0,
+          "attribution": "buffer:F2",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "TP3",
+              "share": 0.2988,
+              "error": 8.1337
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.2917,
+              "error": 7.941
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1359,
+              "error": 3.6981
+            },
+            {
+              "signal": "H1",
+              "share": 0.1197,
+              "error": 3.2597
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0763,
+              "error": 2.078
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0646,
+              "error": 1.7591
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0129,
+              "error": 0.3513
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "static_tuned",
+      "label": "Static thresholds, tuned like the detector",
+      "kind": "baseline",
+      "params": {
+        "oil_temperature": {
+          "threshold": 65.4,
+          "quantile": 0.96,
+          "duration_s": 1800,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 0,
+            "proxies_total": 0,
+            "mean_delay_min": 120.0,
+            "other_alarms": 0
+          },
+          "unit": "\u00b0C"
+        },
+        "motor_current": {
+          "threshold": 3.71,
+          "quantile": 0.7,
+          "duration_s": 1800,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 0,
+            "proxies_total": 0,
+            "mean_delay_min": 120.0,
+            "other_alarms": 0
+          },
+          "unit": "A"
+        },
+        "pressure_drop_rate": {
+          "threshold": 0.054,
+          "quantile": 0.6,
+          "duration_s": 1800,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 0,
+            "proxies_total": 0,
+            "mean_delay_min": 120.0,
+            "other_alarms": 0
+          },
+          "unit": "bar/min"
+        }
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "failure": "Air leak",
+          "window_start": "2022-06-04 10:19:24",
+          "window_end": "2022-06-04 14:22:39",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-06-04 10:58:50",
+          "lead_before_start_h": -0.657,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F2",
+          "failure": "Oil leak",
+          "window_start": "2022-07-11 10:10:18",
+          "window_end": "2022-07-14 10:22:08",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-07-13 03:57:40",
+          "lead_before_start_h": -41.789,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        }
+      ],
+      "summary": {
+        "failures_detected": 2,
+        "failures_missed": 0,
+        "detected_before_window_start": 0,
+        "median_lead_before_start_h": -21.223,
+        "alarms_total": 2,
+        "alarms_in_tuning_period": 0,
+        "false_alarms": 0,
+        "false_alarms_per_week": 0.0,
+        "false_alarms_per_observed_week": 0.0,
+        "false_alarms_during_sustained_load": 0
+      },
+      "rules": {
+        "oil_temperature": {
+          "label": "Oil temperature high",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2022-06-04 10:58:50",
+              "lead_before_start_h": -0.657,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2022-07-13 03:57:40",
+              "lead_before_start_h": -41.789,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            }
+          ],
+          "summary": {
+            "failures_detected": 2,
+            "failures_missed": 0,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": -21.223,
+            "alarms_total": 2,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "motor_current": {
+          "label": "Motor current high",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2022-06-04 11:18:50",
+              "lead_before_start_h": -0.991,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 2
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 1,
+            "failures_missed": 1,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": -0.991,
+            "alarms_total": 2,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "pressure_drop_rate": {
+          "label": "Reservoir pressure falling fast",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 2,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 0,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        }
+      },
+      "alarms": [
+        {
+          "id": "S001",
+          "fire": "2022-06-04 10:58:50",
+          "onset": "2022-06-04 10:28:50",
+          "end": "2022-06-04 16:22:40",
+          "active_minutes": 323.8,
+          "attribution": "F1",
+          "during_sustained_load": true,
+          "rules": [
+            "oil_temperature",
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S002",
+          "fire": "2022-07-13 03:57:40",
+          "onset": "2022-07-13 03:27:40",
+          "end": "2022-07-13 04:07:00",
+          "active_minutes": 9.3,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "static_envelope",
+      "label": "Static thresholds at the pre-failure envelope",
+      "kind": "baseline",
+      "params": {
+        "oil_temperature": {
+          "threshold": 77.025,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "\u00b0C"
+        },
+        "motor_current": {
+          "threshold": 9.03,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "A"
+        },
+        "pressure_drop_rate": {
+          "threshold": 1.892,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "bar/min"
+        }
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "failure": "Air leak",
+          "window_start": "2022-06-04 10:19:24",
+          "window_end": "2022-06-04 14:22:39",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-06-04 10:51:50",
+          "lead_before_start_h": -0.541,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F2",
+          "failure": "Oil leak",
+          "window_start": "2022-07-11 10:10:18",
+          "window_end": "2022-07-14 10:22:08",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2022-07-13 17:33:20",
+          "lead_before_start_h": -55.384,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 3
+        }
+      ],
+      "summary": {
+        "failures_detected": 2,
+        "failures_missed": 0,
+        "detected_before_window_start": 0,
+        "median_lead_before_start_h": -27.962,
+        "alarms_total": 4,
+        "alarms_in_tuning_period": 0,
+        "false_alarms": 0,
+        "false_alarms_per_week": 0.0,
+        "false_alarms_per_observed_week": 0.0,
+        "false_alarms_during_sustained_load": 0
+      },
+      "rules": {
+        "oil_temperature": {
+          "label": "Oil temperature high",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2022-06-04 10:51:50",
+              "lead_before_start_h": -0.541,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2022-07-13 17:33:20",
+              "lead_before_start_h": -55.384,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 3
+            }
+          ],
+          "summary": {
+            "failures_detected": 2,
+            "failures_missed": 0,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": -27.962,
+            "alarms_total": 4,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "motor_current": {
+          "label": "Motor current high",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 2,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 0,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "pressure_drop_rate": {
+          "label": "Reservoir pressure falling fast",
+          "failures": [
+            {
+              "id": "F1",
+              "failure": "Air leak",
+              "window_start": "2022-06-04 10:19:24",
+              "window_end": "2022-06-04 14:22:39",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "failure": "Oil leak",
+              "window_start": "2022-07-11 10:10:18",
+              "window_end": "2022-07-14 10:22:08",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 2,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 0,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        }
+      },
+      "alarms": [
+        {
+          "id": "E001",
+          "fire": "2022-06-04 10:51:50",
+          "onset": "2022-06-04 10:50:50",
+          "end": "2022-06-04 15:58:30",
+          "active_minutes": 306.7,
+          "attribution": "F1",
+          "during_sustained_load": true,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "E002",
+          "fire": "2022-07-13 17:33:20",
+          "onset": "2022-07-13 17:32:20",
+          "end": "2022-07-13 17:33:40",
+          "active_minutes": 0.3,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "E003",
+          "fire": "2022-07-13 18:37:00",
+          "onset": "2022-07-13 18:36:00",
+          "end": "2022-07-13 18:37:50",
+          "active_minutes": 0.8,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "E004",
+          "fire": "2022-07-14 05:18:40",
+          "onset": "2022-07-14 05:17:40",
+          "end": "2022-07-14 06:08:00",
+          "active_minutes": 49.3,
+          "attribution": "F2",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        }
+      ]
+    }
+  ],
+  "sensitivity": {
+    "lead_horizon_h": {
+      "2": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.43,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "6": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.432,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "12": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.434,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "24": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.438,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "48": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.448,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "72": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.457,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      },
+      "168": {
+        "faultline": {
+          "failures_detected": 2,
+          "false_alarms": 3,
+          "false_alarms_per_week": 0.501,
+          "lead_before_start_h": {
+            "F1": -0.854,
+            "F2": -0.792
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.657,
+            "F2": -41.789
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 2,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": -0.541,
+            "F2": -55.384
+          }
+        }
+      }
+    }
+  }
+}

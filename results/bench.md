@@ -1,6 +1,6 @@
 # Benchmark
 
-Generated 2026-10-13T07:53:50Z by `python -m faultline.evaluate` from `data/scores.parquet` and `results/train.json`. Do not edit by hand.
+Generated 2026-10-13T08:41:59Z by `python -m faultline.evaluate` from `data/scores.parquet` and `results/train.json` (MetroPT-3). Do not edit by hand.
 
 Detector trained on: **mps (local development run, not the MI300X)**, PyTorch 2.14.1. Training time 1613 s for 5 cross-fitting folds plus the final model (278 s for the final model alone); 89,047 parameters.
 
@@ -8,10 +8,10 @@ Detector trained on: **mps (local development run, not the MI300X)**, PyTorch 2.
 
 | Failure | Reported window (2020) | Faultline (conv autoencoder) | Static thresholds, tuned like the detector | Static thresholds at the pre-failure envelope |
 |---|---|---|---|---|
-| F1 | 04-18 00:00 to 04-18 23:59 | 86 min after | 44 min after | missed |
-| F2 | 05-29 23:30 to 05-30 06:00 | 16 min after | 5 min after | missed |
-| F3 | 06-05 10:00 to 06-07 14:30 | 21 min after | 9 min after | missed |
-| F4 | 07-15 14:30 to 07-15 19:00 | 98 min before | 7.6 h before | 4 min after |
+| F1 (air leak) | 04-18 00:00 to 04-18 23:59 | 86 min after | 44 min after | missed |
+| F2 (air leak) | 05-29 23:30 to 05-30 06:00 | 16 min after | 5 min after | missed |
+| F3 (air leak) | 06-05 10:00 to 06-07 14:30 | 21 min after | 9 min after | missed |
+| F4 (air leak) | 07-15 14:30 to 07-15 19:00 | 98 min before | 7.6 h before | 4 min after |
 
 ## Warning before the reported maintenance
 

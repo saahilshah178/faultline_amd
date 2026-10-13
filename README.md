@@ -81,10 +81,10 @@ sensitivity analysis, is in [results/bench.md](results/bench.md).
 
 | Failure | Reported window (2020) | Faultline (conv autoencoder) | Static thresholds, tuned like the detector | Static thresholds at the pre-failure envelope |
 |---|---|---|---|---|
-| F1 | 04-18 00:00 to 04-18 23:59 | 86 min after | 44 min after | missed |
-| F2 | 05-29 23:30 to 05-30 06:00 | 16 min after | 5 min after | missed |
-| F3 | 06-05 10:00 to 06-07 14:30 | 21 min after | 9 min after | missed |
-| F4 | 07-15 14:30 to 07-15 19:00 | 98 min before | 7.6 h before | 4 min after |
+| F1 (air leak) | 04-18 00:00 to 04-18 23:59 | 86 min after | 44 min after | missed |
+| F2 (air leak) | 05-29 23:30 to 05-30 06:00 | 16 min after | 5 min after | missed |
+| F3 (air leak) | 06-05 10:00 to 06-07 14:30 | 21 min after | 9 min after | missed |
+| F4 (air leak) | 07-15 14:30 to 07-15 19:00 | 98 min before | 7.6 h before | 4 min after |
 
 ### Warning before the reported maintenance
 
@@ -107,6 +107,24 @@ sensitivity analysis, is in [results/bench.md](results/bench.md).
 
 False alarms are counted from 2020-04-18 to 2020-09-01, outside the failure spans: 17.8 calendar weeks, 14.4 weeks of logged data. "During sustained compressor load" counts false alarms that fired while the compressor had been under load for more than 20 minutes without a break, the same behaviour as in the reported failures, on days with no failure report.
 <!-- bench:end -->
+
+### Second test: MetroPT-2
+
+MetroPT-2 is a later recording from the same operator (April to July 2022, a
+different failure history: one air leak and one oil leak). Nothing about the
+detector, the baselines or the tuning procedure was chosen with it. The same
+code was pointed at it afterwards, trained and tuned on its own data from before
+its first failure, with every setting left as it was for MetroPT-3.
+
+<!-- metropt2:start -->
+| | F1 (air leak, 2022-06-04) | F2 (oil leak, 2022-07-11) | False alarms | False alarms per week |
+|---|---|---|---|---|
+| Faultline (conv autoencoder) | 51 min after | 48 min after | 3 | 0.44 |
+| Static thresholds, tuned like the detector | 39 min after | 41.8 h after | 0 | 0.00 |
+| Static thresholds at the pre-failure envelope | 32 min after | 55.4 h after | 0 | 0.00 |
+
+First alarm against the start of each reported window; false alarms counted over the 6.8 weeks after the first failure. Trained on `mps` in a local development run on 2026-10-13, on MetroPT-2 data from before 2022-06-04 10:19 only. Full report: [results/metropt2/bench.md](results/metropt2/bench.md).
+<!-- metropt2:end -->
 
 ### Detector training
 
@@ -286,8 +304,9 @@ uv run pytest                                  # includes the guard that tuning 
 
 ## Limitations
 
-- **Four failures.** All four are air leaks on one machine. Nothing here is a
-  rate, and nothing here says how the detector does on other fault types.
+- **Four failures.** All four are air leaks on one machine. The second test adds
+  one air leak and one oil leak from a later recording. Nothing here is a rate,
+  and one oil leak says little about other fault types.
 - **The reported windows open late.** In the data, each window starts within
   minutes of the compressor going into continuous load, when the leak is already
   in full effect. Lead time against the window start is therefore mostly a

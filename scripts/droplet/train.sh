@@ -39,16 +39,21 @@ done
 echo "using $PYTORCH_IMAGE"
 echo "$PYTORCH_IMAGE" > results/gpu/pytorch_image.txt
 
-docker run --rm "${GPU_FLAGS[@]}" \
-  -v "$REMOTE_DIR:/workspace" -w /workspace \
-  -e PYTHONPATH=/workspace -e PIP_ROOT_USER_ACTION=ignore -e FAULTLINE_GIT_COMMIT \
-  "$PYTORCH_IMAGE" \
-  bash -c '
-    set -euo pipefail
-    python3 -c "import torch; assert torch.cuda.is_available(), \"no ROCm GPU visible\"; print(\"torch\", torch.__version__, \"hip\", torch.version.hip, torch.cuda.get_device_name(0))"
-    python3 -m pip install -q "pandas>=2.2" "pyarrow>=17" python-dotenv
-    python3 -m faultline.train --device cuda
-  '
+# MetroPT-3 always; MetroPT-2 as well when its parquet was synced (held-out second test).
+for dataset in ${FAULTLINE_DATASETS:-metropt3}; do
+  echo "== training on $dataset"
+  docker run --rm "${GPU_FLAGS[@]}" \
+    -v "$REMOTE_DIR:/workspace" -w /workspace \
+    -e PYTHONPATH=/workspace -e PIP_ROOT_USER_ACTION=ignore -e FAULTLINE_GIT_COMMIT \
+    -e FAULTLINE_DATASET="$dataset" \
+    "$PYTORCH_IMAGE" \
+    bash -c '
+      set -euo pipefail
+      python3 -c "import torch; assert torch.cuda.is_available(), \"no ROCm GPU visible\"; print(\"torch\", torch.__version__, \"hip\", torch.version.hip, torch.cuda.get_device_name(0))"
+      python3 -m pip install -q "pandas>=2.2" "pyarrow>=17" python-dotenv
+      python3 -m faultline.train --device cuda
+    '
+done
 
 echo "== GPU after training"
 vram | tee results/gpu/train_after.txt

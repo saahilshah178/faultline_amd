@@ -17,8 +17,7 @@ import pandas as pd
 from faultline.alarms import LOADED_CURRENT_A, _runs, sustained_load_episodes, to_seconds
 from faultline.config import REPO_ROOT, RESULTS_DIR
 from faultline.data import ANALOG_SIGNALS, DIGITAL_SIGNALS, load
-from faultline.detector import GAP_S, assert_pre_failure
-from faultline.failures import FIRST_FAILURE_START
+from faultline.failures import FIRST_FAILURE_START, GAP_S, assert_pre_failure
 
 PROFILE_JSON = RESULTS_DIR / "eda" / "normal_profile.json"
 APU_DOC = REPO_ROOT / "docs" / "apu_description.md"

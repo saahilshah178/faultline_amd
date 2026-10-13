@@ -181,6 +181,20 @@ def block_pitch(bench: dict) -> str:
         "compressor load on days with no failure report.",
         f"- Detector training took {bench['training']['train_seconds_total']:.0f} s on {trained_on(bench)}.",
     ]
+    if METROPT2_BENCH.exists():
+        b2 = json.loads(METROPT2_BENCH.read_text())
+        f2, t2 = (next(m for m in b2["methods"] if m["key"] == k) for k in ("faultline", "static_tuned"))
+
+        def leads2(m: dict) -> str:
+            return ", ".join(
+                f"{f['id']} ({f['failure'].lower()}) {fmt_lead(f['lead_before_start_h'])}" for f in m["failures"]
+            )
+
+        lines.append(
+            f"- Held-out second recording (MetroPT-2, nothing retuned): Faultline's first alarm {leads2(f2)}, "
+            f"with {f2['summary']['false_alarms_per_week']:.2f} false alarms per week; tuned static rules "
+            f"{leads2(t2)}, with {t2['summary']['false_alarms_per_week']:.2f}."
+        )
     if llm is None:
         lines.append("- Tokens per second and GPU cost per alert: not measured yet (needs the MI300X run).")
     else:
@@ -196,7 +210,49 @@ def block_pitch(bench: dict) -> str:
     return "\n".join(lines)
 
 
+METROPT2_BENCH = RESULTS_DIR / "metropt2" / "bench.json"
+
+
+def block_metropt2(bench: dict) -> str:
+    """Held-out second test: the same code on the MetroPT-2 recording."""
+    if not METROPT2_BENCH.exists():
+        return (
+            "Not run yet. `FAULTLINE_DATASET=metropt2 uv run python -m faultline.data` builds the data; "
+            "the training scripts then include it."
+        )
+    b2 = json.loads(METROPT2_BENCH.read_text())
+    period = b2["protocol"]["evaluation_period"]
+    methods = b2["methods"]
+    rows = [
+        "| | " + " | ".join(
+            f"{f['id']} ({f['failure'].lower()}, {f['window_start'][:10]})" for f in methods[0]["failures"]
+        ) + " | False alarms | False alarms per week |",
+        "|---|" + "---|" * (len(methods[0]["failures"]) + 2),
+    ]
+    for m in methods:
+        cells = [fmt_lead(f["lead_before_start_h"]) for f in m["failures"]]
+        rows.append(
+            f"| {m['label']} | " + " | ".join(cells)
+            + f" | {m['summary']['false_alarms']} | {m['summary']['false_alarms_per_week']:.2f} |"
+        )
+    hw = b2["training"]["hardware"]
+    where = (
+        "on the MI300X" if b2["training"]["trained_on_mi300x"]
+        else f"on `{hw['gpu_name'] or hw['device']}` in a local development run"
+    )
+    text = "\n".join(rows)
+    text += (
+        f"\n\nFirst alarm against the start of each reported window; false alarms counted over the "
+        f"{period['calendar_weeks']:.1f} weeks after the first failure. Trained {where} on "
+        f"{b2['training']['run']['finished_utc'][:10]}, on MetroPT-2 data from before "
+        f"{b2['protocol']['training_cutoff'][:16]} only. Full report: "
+        "[results/metropt2/bench.md](results/metropt2/bench.md)."
+    )
+    return text
+
+
 BLOCKS = {
+    "metropt2": block_metropt2,
     "pitch": block_pitch,
     "status": block_status,
     "headline": block_headline,

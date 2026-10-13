@@ -27,11 +27,9 @@ import pandas as pd
 
 from faultline import alarms as A
 from faultline import baseline as B
-from faultline.config import RESULTS_DIR
-from faultline.data import ANALOG_SIGNALS, NOMINAL_INTERVAL_S, UCI_PAGE_URL, load
-from faultline.detector import GAP_S
-from faultline.failures import FIRST_FAILURE_START, Failure, load_failures
-from faultline.train import SCORES_PATH, TRAIN_REPORT
+from faultline.config import DATASET, DATASET_INFO, REPO_ROOT, RESULTS_DIR, SCORES_PATH, TRAIN_REPORT
+from faultline.data import ANALOG_SIGNALS, NOMINAL_INTERVAL_S, load
+from faultline.failures import FIRST_FAILURE_START, GAP_S, Failure, load_failures
 
 BENCH_JSON = RESULTS_DIR / "bench.json"
 BENCH_MD = RESULTS_DIR / "bench.md"
@@ -67,6 +65,7 @@ def zones(failures: list[Failure], horizon_h: float) -> list[dict]:
         out.append(
             {
                 "id": f.id,
+                "failure": f.failure,
                 "start": secs(f.start),
                 "end": secs(f.end),
                 "maintenance": secs(f.maintenance) if f.maintenance is not None else None,
@@ -119,6 +118,7 @@ def failure_rows(fires: np.ndarray, zs: list[dict]) -> list[dict]:
         first = int(hits.min()) if len(hits) else None
         row = {
             "id": z["id"],
+            "failure": z["failure"],
             "window_start": iso(z["start"]),
             "window_end": iso(z["end"]),
             "maintenance": iso(z["maintenance"]),
@@ -303,9 +303,9 @@ def build(scores_path=SCORES_PATH, train_report_path=TRAIN_REPORT) -> tuple[dict
     bench = {
         "generated_utc": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "dataset": {
-            "name": "MetroPT-3",
-            "source": UCI_PAGE_URL,
-            "license": "CC BY 4.0",
+            "name": DATASET_INFO["name"],
+            "source": DATASET_INFO["source"],
+            "license": DATASET_INFO["license"],
             "rows": len(df),
             "start": str(df.index[0]),
             "end": str(df.index[-1]),
@@ -376,7 +376,8 @@ def markdown(bench: dict) -> str:
     lines = ["# Benchmark", ""]
     lines.append(
         f"Generated {bench['generated_utc']} by `python -m faultline.evaluate` from "
-        f"`data/scores.parquet` and `results/train.json`. Do not edit by hand."
+        f"`{SCORES_PATH.relative_to(REPO_ROOT)}` and `{TRAIN_REPORT.relative_to(REPO_ROOT)}` "
+        f"({bench['dataset']['name']}). Do not edit by hand."
     )
     lines.append("")
     device = hw["gpu_name"] or hw["device"]
@@ -389,15 +390,19 @@ def markdown(bench: dict) -> str:
         f"{tr['parameters']:,} parameters."
     )
     lines += ["", "## First alarm relative to the start of each reported failure window", ""]
-    lines.append("| Failure | Reported window (2020) | " + " | ".join(m["label"] for m in methods) + " |")
+    lines.append(
+        f"| Failure | Reported window ({bench['dataset']['start'][:4]}) | "
+        + " | ".join(m["label"] for m in methods) + " |"
+    )
     lines.append("|---|---|" + "---|" * len(methods))
     for i, f in enumerate(methods[0]["failures"]):
         window = f"{f['window_start'][5:16]} to {f['window_end'][5:16]}"
         cells = [fmt_lead(m["failures"][i]["lead_before_start_h"]) for m in methods]
-        lines.append(f"| {f['id']} | {window} | " + " | ".join(cells) + " |")
-    lines += ["", "## Warning before the reported maintenance", ""]
-    lines.append("| Failure | Maintenance | " + " | ".join(m["label"] for m in methods) + " |")
-    lines.append("|---|---|" + "---|" * len(methods))
+        lines.append(f"| {f['id']} ({f['failure'].lower()}) | {window} | " + " | ".join(cells) + " |")
+    if any(f["maintenance"] for f in methods[0]["failures"]):
+        lines += ["", "## Warning before the reported maintenance", ""]
+        lines.append("| Failure | Maintenance | " + " | ".join(m["label"] for m in methods) + " |")
+        lines.append("|---|---|" + "---|" * len(methods))
     for i, f in enumerate(methods[0]["failures"]):
         if f["maintenance"] is None:
             continue
@@ -410,7 +415,7 @@ def markdown(bench: dict) -> str:
     def row(name: str, fn) -> None:
         lines.append(f"| {name} | " + " | ".join(str(fn(m["summary"])) for m in methods) + " |")
 
-    row("Failures detected (of 4)", lambda s: s["failures_detected"])
+    row(f"Failures detected (of {len(methods[0]['failures'])})", lambda s: s["failures_detected"])
     row("Detected before the window start", lambda s: s["detected_before_window_start"])
     row("False alarms", lambda s: s["false_alarms"])
     row("False alarms per week", lambda s: f"{s['false_alarms_per_week']:.2f}")
@@ -439,27 +444,31 @@ def markdown(bench: dict) -> str:
             for r, p in m["params"].items()
         ]
         lines.append(f"- {m['label']}: " + "; ".join(parts) + ".")
-    lines += ["", "## How each method did on the pre-failure data it was tuned on", ""]
-    lines.append("| Method | Sustained-load episodes caught within 2 h | Mean delay | Other alarms |")
-    lines.append("|---|---|---|---|")
-    tuned_rows = [(fl["label"], fl["tuning"])]
     tuned = next(m for m in methods if m["key"] == "static_tuned")
-    tuned_rows += [(f"Static: {B.RULES[r]['label'].lower()}", p["tuning"]) for r, p in tuned["params"].items()]
-    for label, t in tuned_rows:
-        lines.append(
-            f"| {label} | {t['proxies_detected']} of {t['proxies_total']} | "
-            f"{t['mean_delay_min']:.0f} min | {t['other_alarms']} |"
-        )
+    if bench["pre_failure_sustained_load_episodes"]:
+        lines += ["", "## How each method did on the pre-failure data it was tuned on", ""]
+        lines.append("| Method | Sustained-load episodes caught within 2 h | Mean delay | Other alarms |")
+        lines.append("|---|---|---|---|")
+        tuned_rows = [(fl["label"], fl["tuning"])]
+        tuned_rows += [(f"Static: {B.RULES[r]['label'].lower()}", p["tuning"]) for r, p in tuned["params"].items()]
+        for label, t in tuned_rows:
+            lines.append(
+                f"| {label} | {t['proxies_detected']} of {t['proxies_total']} | "
+                f"{t['mean_delay_min']:.0f} min | {t['other_alarms']} |"
+            )
+        lines += [
+            "",
+            "Mean delay counts an episode that was not caught within 2 h as 2 h. The episodes are defined "
+            "from motor current (under load for more than "
+            f"{proto['tuning']['sustained_load_min_s'] // 60} minutes without a break), which favours the "
+            "static motor-current rule: it is close to the definition itself.",
+        ]
     lines += [
-        "",
-        "Mean delay counts an episode that was not caught within 2 h as 2 h. The episodes are defined "
-        "from motor current (under load for more than "
-        f"{proto['tuning']['sustained_load_min_s'] // 60} minutes without a break), which favours the "
-        "static motor-current rule: it is close to the definition itself.",
         "",
         "## The tuned static rules, one at a time",
         "",
-        "| Rule | Failures detected | First alarm vs window start (F1 to F4) | False alarms | False alarms per week |",
+        f"| Rule | Failures detected | First alarm vs window start (F1 to F{len(methods[0]['failures'])}) "
+        "| False alarms | False alarms per week |",
         "|---|---|---|---|---|",
     ]
     for r, v in tuned["rules"].items():
@@ -474,18 +483,31 @@ def markdown(bench: dict) -> str:
         "",
         f"- Training and tuning read only data before {proto['training_cutoff']}, the start of the first "
         "reported failure. The code enforces this (`assert_pre_failure`).",
-        f"- The pre-failure data contains {len(bench['pre_failure_sustained_load_episodes'])} unreported "
-        "episodes of sustained compressor load. Every method was tuned to detect those as early as possible "
-        f"with at most {proto['tuning']['max_other_alarms']} other alarms in the pre-failure period.",
+        (
+            f"- The pre-failure data contains {len(bench['pre_failure_sustained_load_episodes'])} unreported "
+            "episodes of sustained compressor load. Every method was tuned to detect those as early as possible "
+            f"with at most {proto['tuning']['max_other_alarms']} other alarms in the pre-failure period."
+            if bench["pre_failure_sustained_load_episodes"]
+            else "- The pre-failure data contains no episode of sustained compressor load to tune against, so "
+            "the same procedure reduces to its tie-break: each method gets the lowest threshold, then the "
+            "shortest duration, that raises no alarm at all in the pre-failure period."
+        ),
         f"- A failure counts as detected if an alarm fires from {proto['lead_horizon_h']} h before its window "
         "starts until the window ends (or the reported maintenance, if later). Alarms outside those spans, "
         f"and outside the {proto['post_buffer_h']} h after them, are false alarms.",
         f"- The detector needs {tr['config']['window'] * NOMINAL_INTERVAL_S // 60} minutes of unbroken data before "
         f"it can score, so it is blind for that long after every gap in the record; it scored "
         f"{tr['share_of_rows_scored']:.1%} of the rows.",
-        "- The reported windows open within minutes of the compressor going into continuous load, so "
-        "\"minutes after\" means minutes after the leak was already in full effect.",
-        "- Four failures is a small sample. Treat every number here as a case study, not a rate.",
+        *(
+            [
+                "- The reported windows open within minutes of the compressor going into continuous load, so "
+                "\"minutes after\" means minutes after the leak was already in full effect."
+            ]
+            if DATASET == "metropt3"
+            else []
+        ),
+        f"- {['Zero', 'One', 'Two', 'Three', 'Four'][len(methods[0]['failures'])]} failures is a small sample. "
+        "Treat every number here as a case study, not a rate.",
         "",
         "## Sensitivity to the lead horizon",
         "",
@@ -559,7 +581,7 @@ def main(argv: list[str] | None = None) -> int:
     for m in bench["methods"]:
         s = m["summary"]
         leads = ", ".join(f"{r['id']} {fmt_lead(r['lead_before_start_h'])}" for r in m["failures"])
-        print(f"{m['label']}: {s['failures_detected']}/4 detected; {leads}; "
+        print(f"{m['label']}: {s['failures_detected']}/{len(m['failures'])} detected; {leads}; "
               f"{s['false_alarms']} false alarms ({s['false_alarms_per_week']:.2f}/week)")
     print(f"wrote {BENCH_JSON.name}, {BENCH_MD.name}, {ALARMS_JSON.name}")
     return 0

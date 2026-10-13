@@ -12,11 +12,43 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 MODELS_DIR = REPO_ROOT / "models"
-RESULTS_DIR = REPO_ROOT / "results"
 PROMPTS_DIR = REPO_ROOT / "prompts"
 
-PARQUET_PATH = DATA_DIR / "metropt3.parquet"
-FAILURES_CSV = DATA_DIR / "failures.csv"
+# The product runs on MetroPT-3. MetroPT-2 is a second recording from the same
+# operator (2022, another failure history) used only as a held-out test of the
+# detector and baselines: FAULTLINE_DATASET=metropt2 points the same training and
+# evaluation code at it, with its results kept apart under results/metropt2/.
+DATASETS = {
+    "metropt3": {
+        "name": "MetroPT-3",
+        "source": "https://archive.ics.uci.edu/dataset/791/metropt+3+dataset",
+        "license": "CC BY 4.0",
+        "parquet": "metropt3.parquet",
+        "failures": "failures.csv",
+        "results": "results",
+        "tag": "",
+    },
+    "metropt2": {
+        "name": "MetroPT-2",
+        "source": "https://zenodo.org/records/7766691",
+        "license": "CC BY 4.0",
+        "parquet": "metropt2.parquet",
+        "failures": "failures_metropt2.csv",
+        "results": "results/metropt2",
+        "tag": "_metropt2",
+    },
+}
+DATASET = os.getenv("FAULTLINE_DATASET", "metropt3")
+if DATASET not in DATASETS:
+    raise ValueError(f"FAULTLINE_DATASET must be one of {sorted(DATASETS)}, got {DATASET!r}")
+DATASET_INFO = DATASETS[DATASET]
+
+RESULTS_DIR = REPO_ROOT / DATASET_INFO["results"]
+PARQUET_PATH = DATA_DIR / DATASET_INFO["parquet"]
+FAILURES_CSV = DATA_DIR / DATASET_INFO["failures"]
+SCORES_PATH = DATA_DIR / f"scores{DATASET_INFO['tag']}.parquet"
+MODEL_PATH = MODELS_DIR / f"detector{DATASET_INFO['tag']}.pt"
+TRAIN_REPORT = RESULTS_DIR / "train.json"
 
 load_dotenv(REPO_ROOT / ".env")
 

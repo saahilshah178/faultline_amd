@@ -23,6 +23,8 @@ export interface Alarm {
 
 export interface FailureResult {
   id: string;
+  /** Kind of failure as reported, e.g. "Air leak". */
+  failure?: string;
   window_start: string;
   window_end: string;
   maintenance: string | null;

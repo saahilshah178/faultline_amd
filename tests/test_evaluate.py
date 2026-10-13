@@ -65,3 +65,17 @@ def test_lead_formatting():
     assert E.fmt_lead(0.25) == "15 min before"
     assert E.fmt_lead(-0.5) == "30 min after"
     assert E.fmt_lead(5.0) == "5.0 h before"
+
+
+def test_evaluation_and_reporting_do_not_need_pytorch():
+    """Training happens on the droplet; the laptop side must run without torch installed."""
+    import subprocess
+    import sys
+
+    code = (
+        "import sys; sys.modules['torch'] = None\n"
+        "import faultline.evaluate, faultline.evidence, faultline.export_replay\n"
+        "import faultline.profile, faultline.report, faultline.explain, faultline.kb\n"
+    )
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr[-600:]

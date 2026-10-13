@@ -24,13 +24,10 @@ from pathlib import Path
 
 import torch
 
-from faultline.config import DATA_DIR, MODELS_DIR, REPO_ROOT, RESULTS_DIR
+from faultline.config import MODEL_PATH, REPO_ROOT, SCORES_PATH, TRAIN_REPORT
 from faultline.data import load
 from faultline.detector import DetectorConfig, pick_device, run_training
 
-SCORES_PATH = DATA_DIR / "scores.parquet"
-MODEL_PATH = MODELS_DIR / "detector.pt"
-TRAIN_REPORT = RESULTS_DIR / "train.json"
 
 
 def git_commit() -> str | None:

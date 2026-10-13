@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 from faultline.alarms import Episode, find_episodes, to_seconds, tune
-from faultline.detector import assert_pre_failure
+from faultline.failures import assert_pre_failure
 
 RULES = {
     "oil_temperature": {"label": "Oil temperature high", "unit": "°C"},

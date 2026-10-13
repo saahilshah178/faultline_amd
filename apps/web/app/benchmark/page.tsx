@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LeadChart } from "@/components/benchmark/LeadChart";
 import { MissingData } from "@/components/MissingData";
 import { RULE_LABEL, fmtInt, fmtLead, fmtLeadLong, fmtNum, fmtSeconds } from "@/lib/labels";
-import { loadBench, loadLlmSummary } from "@/lib/server/data";
+import { loadBench, loadLlmSummary, loadSecondBench } from "@/lib/server/data";
 import { methodColor } from "@/lib/theme";
 import { trimSeconds } from "@/lib/time";
 import type { Bench, Method, RuleParams } from "@/lib/types";
@@ -73,6 +73,7 @@ export default function BenchmarkPage() {
     return <MissingData what="The benchmark" file="results/bench.json" fix="python -m faultline.evaluate" />;
   }
   const llm = loadLlmSummary();
+  const second = loadSecondBench();
   const methods = bench.methods;
   const failures = methods[0].failures;
   const withMaintenance = failures.filter((f) => f.maintenance);
@@ -283,6 +284,70 @@ export default function BenchmarkPage() {
               </tbody>
             </table>
           </div>
+        </section>
+      ) : null}
+
+      {second?.methods?.length ? (
+        <section className="panel" data-testid="second-test">
+          <header className="section-head">
+            <h2>Second test: {second.dataset?.name ?? "another recording"}</h2>
+            <span className="muted">
+              a later recording from the same operator, {(second.dataset?.start ?? "").slice(0, 10)} to {(second.dataset?.end ?? "").slice(0, 10)}
+            </span>
+          </header>
+          <p className="hint">
+            Nothing about the detector, the static rules or the tuning procedure was chosen with this recording. The same code was run on it
+            afterwards, trained and tuned only on its own data from before {trimSeconds(second.protocol?.training_cutoff ?? "")}.{" "}
+            {second.training?.trained_on_mi300x
+              ? "Trained on the MI300X."
+              : `Trained on ${second.training?.hardware?.gpu_name ?? second.training?.hardware?.device ?? "an unrecorded device"}: a local development run, not the MI300X.`}
+          </p>
+          <div className="table-wrap">
+            <table className="data-table lead-table" data-testid="second-test-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  {second.methods[0].failures.map((f) => (
+                    <th key={f.id}>
+                      {f.id}
+                      {f.failure ? `: ${f.failure.toLowerCase()}` : ""}
+                      <span className="sub">reported {trimSeconds(f.window_start)}</span>
+                    </th>
+                  ))}
+                  <th>False alarms</th>
+                  <th>False alarms per week</th>
+                </tr>
+              </thead>
+              <tbody>
+                {second.methods.map((m) => (
+                  <tr key={m.key}>
+                    <th scope="row">
+                      <Key method={m} />
+                      {m.label}
+                    </th>
+                    {m.failures.map((r) => (
+                      <td
+                        key={r.id}
+                        data-method={m.key}
+                        data-failure={r.id}
+                        data-value={r.lead_before_start_h ?? ""}
+                        className={!r.detected ? "is-missed" : (r.lead_before_start_h ?? 0) > 0 ? "is-before" : "is-after"}
+                      >
+                        <strong>{fmtLeadLong(r.lead_before_start_h, r.detected)}</strong>
+                        {r.first_alarm ? <span className="sub">first alarm {trimSeconds(r.first_alarm)}</span> : null}
+                      </td>
+                    ))}
+                    <td className="num">{fmtInt(m.summary.false_alarms)}</td>
+                    <td className="num">{fmtNum(m.summary.false_alarms_per_week)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="hint">
+            False alarms counted over {second.protocol?.evaluation_period?.calendar_weeks} calendar weeks after the first failure.{" "}
+            {second.methods[0].failures.length} reported failures: a case study, not a rate.
+          </p>
         </section>
       ) : null}
 

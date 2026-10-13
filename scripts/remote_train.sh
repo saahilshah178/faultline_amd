@@ -14,29 +14,43 @@ require_env DROPLET_HOST
   exit 1
 }
 
-echo "== pushing code and data to $DROPLET_HOST:$REMOTE_DIR"
-remote "mkdir -p $REMOTE_DIR/data $REMOTE_DIR/results $REMOTE_DIR/models"
+# MetroPT-3 always. MetroPT-2 too, if its parquet has been built locally
+# (FAULTLINE_DATASET=metropt2 uv run python -m faultline.data).
+DATASETS=(metropt3)
+[[ -f "$REPO_ROOT/data/metropt2.parquet" ]] && DATASETS+=(metropt2)
+
+echo "== pushing code and data to $DROPLET_HOST:$REMOTE_DIR (datasets: ${DATASETS[*]})"
+remote "mkdir -p $REMOTE_DIR/data $REMOTE_DIR/results/metropt2 $REMOTE_DIR/models"
 push_repo
-rsync -az -e "ssh ${SSH_OPTS[*]}" \
-  "$REPO_ROOT/data/metropt3.parquet" "$REPO_ROOT/data/failures.csv" \
-  "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/data/"
+SYNC=("$REPO_ROOT/data/metropt3.parquet" "$REPO_ROOT/data/failures.csv")
+[[ " ${DATASETS[*]} " == *" metropt2 "* ]] && SYNC+=("$REPO_ROOT/data/metropt2.parquet" "$REPO_ROOT/data/failures_metropt2.csv")
+rsync -az -e "ssh ${SSH_OPTS[*]}" "${SYNC[@]}" "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/data/"
 
 echo "== training on the droplet"
 {
   echo "export REMOTE_DIR='$REMOTE_DIR' PYTORCH_IMAGE='${PYTORCH_IMAGE:-}'"
+  echo "export FAULTLINE_DATASETS='${DATASETS[*]}'"
   echo "export FAULTLINE_GIT_COMMIT='$(git -C "$REPO_ROOT" rev-parse --short HEAD 2>/dev/null || true)'"
   cat "$REPO_ROOT/scripts/droplet/train.sh"
 } | remote 'bash -s'
 
 echo "== pulling results"
-mkdir -p "$REPO_ROOT/models" "$REPO_ROOT/results/gpu"
-rsync -az -e "ssh ${SSH_OPTS[*]}" "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/results/train.json" "$REPO_ROOT/results/"
-rsync -az -e "ssh ${SSH_OPTS[*]}" "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/results/gpu/" "$REPO_ROOT/results/gpu/"
-rsync -az -e "ssh ${SSH_OPTS[*]}" "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/data/scores.parquet" "$REPO_ROOT/data/"
-rsync -az -e "ssh ${SSH_OPTS[*]}" "$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR/models/detector.pt" "$REPO_ROOT/models/"
+mkdir -p "$REPO_ROOT/models" "$REPO_ROOT/results/gpu" "$REPO_ROOT/results/metropt2"
+FROM="$DROPLET_USER@$DROPLET_HOST:$REMOTE_DIR"
+rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/results/gpu/" "$REPO_ROOT/results/gpu/"
+rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/results/train.json" "$REPO_ROOT/results/"
+rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/data/scores.parquet" "$REPO_ROOT/data/"
+rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/models/detector.pt" "$REPO_ROOT/models/"
+if [[ " ${DATASETS[*]} " == *" metropt2 "* ]]; then
+  rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/results/metropt2/train.json" "$REPO_ROOT/results/metropt2/"
+  rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/data/scores_metropt2.parquet" "$REPO_ROOT/data/"
+  rsync -az -e "ssh ${SSH_OPTS[*]}" "$FROM/models/detector_metropt2.pt" "$REPO_ROOT/models/"
+fi
 
 echo "== evaluating locally"
-(cd "$REPO_ROOT" && uv run python -m faultline.evaluate)
+for dataset in "${DATASETS[@]}"; do
+  (cd "$REPO_ROOT" && FAULTLINE_DATASET="$dataset" uv run python -m faultline.evaluate)
+done
 
 echo
 echo "Done. The droplet bills by the hour even when powered off."

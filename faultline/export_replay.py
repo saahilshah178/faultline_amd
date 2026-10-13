@@ -21,12 +21,11 @@ import numpy as np
 import pandas as pd
 
 from faultline.alarms import LOADED_CURRENT_A
-from faultline.config import REPO_ROOT, RESULTS_DIR
+from faultline.config import REPO_ROOT, RESULTS_DIR, SCORES_PATH
 from faultline.data import ANALOG_SIGNALS, load
 from faultline.eda import UNITS
 from faultline.evaluate import BENCH_JSON, faultline_score
 from faultline.failures import load_failures
-from faultline.train import SCORES_PATH
 
 REPLAY_DIR = RESULTS_DIR / "replay"
 STEP_S = 60

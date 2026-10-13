@@ -1,0 +1,114 @@
+{
+  "hardware": {
+    "device": "mps",
+    "torch": "2.14.1",
+    "hip": null,
+    "cuda": null,
+    "gpu_name": null,
+    "gpu_memory_gb": null
+  },
+  "config": {
+    "window": 192,
+    "tail": 48,
+    "latent": 16,
+    "channels": [
+      32,
+      64,
+      64,
+      32
+    ],
+    "epochs": 20,
+    "batch_size": 1024,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "exclude_sustained_load": true,
+    "trim_fraction": 0.1,
+    "trim_warmup_epochs": 1,
+    "folds": 5,
+    "seed": 7,
+    "score_batch": 8192
+  },
+  "signals": [
+    "TP2",
+    "TP3",
+    "H1",
+    "DV_pressure",
+    "Reservoirs",
+    "Oil_temperature",
+    "Motor_current"
+  ],
+  "training_cutoff": "2022-06-04 10:19:24.300000",
+  "training_data_end": "2022-06-04 10:19:20",
+  "parameters": 89047,
+  "rows_total": 705563,
+  "rows_pre_failure": 290909,
+  "pre_failure_windows": 283504,
+  "pre_failure_windows_excluded_from_training": 0,
+  "windows_scored": 688784,
+  "share_of_rows_scored": 0.9762,
+  "train_seconds_total": 432.65,
+  "train_seconds_final_model": 79.53,
+  "score_seconds_post_failure": 2.11,
+  "score_windows_per_second": 192178.0,
+  "folds": [
+    {
+      "seconds": 55.7,
+      "windows": 228091,
+      "steps": 4440,
+      "first_epoch_loss": 0.81906,
+      "last_epoch_loss": 0.01845,
+      "fold": 0,
+      "held_out_windows": 55222
+    },
+    {
+      "seconds": 58.2,
+      "windows": 226512,
+      "steps": 4420,
+      "first_epoch_loss": 0.81341,
+      "last_epoch_loss": 0.01667,
+      "fold": 1,
+      "held_out_windows": 56801
+    },
+    {
+      "seconds": 97.01,
+      "windows": 224681,
+      "steps": 4380,
+      "first_epoch_loss": 0.86406,
+      "last_epoch_loss": 0.01598,
+      "fold": 2,
+      "held_out_windows": 58632
+    },
+    {
+      "seconds": 76.69,
+      "windows": 227983,
+      "steps": 4440,
+      "first_epoch_loss": 0.79926,
+      "last_epoch_loss": 0.01994,
+      "fold": 3,
+      "held_out_windows": 55330
+    },
+    {
+      "seconds": 65.52,
+      "windows": 225985,
+      "steps": 4400,
+      "first_epoch_loss": 0.82643,
+      "last_epoch_loss": 0.01753,
+      "fold": 4,
+      "held_out_windows": 57519
+    }
+  ],
+  "final": {
+    "seconds": 79.53,
+    "windows": 283504,
+    "steps": 5520,
+    "first_epoch_loss": 0.73688,
+    "last_epoch_loss": 0.01426
+  },
+  "run": {
+    "finished_utc": "2026-10-13T08:37:41Z",
+    "host": "Saahils-MacBook-Pro.local",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "git_commit": "1dc3d36",
+    "smoke": false
+  }
+}

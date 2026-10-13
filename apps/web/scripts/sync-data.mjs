@@ -43,6 +43,8 @@ const SERVER_FILES = [
   ["kb/embeddings.json", false],
   ["kb/embeddings.f32", false],
   ["llm/summary.json", false],
+  // Held-out second test (MetroPT-2), shown as one section of the benchmark view.
+  ["metropt2/bench.json", false],
 ];
 const PUBLIC_FILES = [
   ["replay/manifest.json", true],

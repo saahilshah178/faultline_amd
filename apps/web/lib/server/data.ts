@@ -37,6 +37,11 @@ export function loadBench(): Bench | null {
   return readJson<Bench>("bench.json");
 }
 
+/** The same benchmark run on the held-out MetroPT-2 recording, if the pipeline has produced it. */
+export function loadSecondBench(): Bench | null {
+  return readJson<Bench>("metropt2", "bench.json");
+}
+
 export function loadAlarms(): Alarm[] {
   return readJson<{ alarms: Alarm[] }>("alarms.json")?.alarms ?? [];
 }

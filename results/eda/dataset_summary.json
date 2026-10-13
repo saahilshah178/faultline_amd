@@ -1,9 +1,8 @@
 {
+  "dataset": "MetroPT-3",
   "source": "https://archive.ics.uci.edu/dataset/791/metropt+3+dataset",
   "rows": 1516948,
-  "rows_match_uci": true,
   "features": 15,
-  "features_match_uci": true,
   "start": "2020-02-01 00:00:00",
   "end": "2020-09-01 03:59:50",
   "analog_signals": [
@@ -149,5 +148,7 @@
     "Pressure_switch": 0.9914367532703824,
     "Oil_level": 0.904155580810944,
     "Caudal_impulses": 0.9371066114329561
-  }
+  },
+  "rows_match_uci": true,
+  "features_match_uci": true
 }
