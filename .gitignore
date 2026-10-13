@@ -1,0 +1,33 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# data and model weights are rebuilt by the pipeline (see README)
+data/*
+!data/failures.csv
+!data/README.md
+models/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# node / next
+node_modules/
+.next/
+out/
+apps/web/public/data/
+apps/web/test-results/
+apps/web/playwright-report/
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+.DS_Store
+.vercel
+*.log
