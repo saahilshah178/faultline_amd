@@ -21,12 +21,18 @@ FAILURES_CSV = DATA_DIR / "failures.csv"
 load_dotenv(REPO_ROOT / ".env")
 
 
+def _server_url(name: str, port: int) -> str:
+    """LLM_URL / EMBED_URL, or the standard port on the droplet if only DROPLET_HOST is set."""
+    host = os.getenv("DROPLET_HOST", "")
+    return os.getenv(name, "") or (f"http://{host}:{port}/v1" if host else "")
+
+
 @dataclass(frozen=True)
 class Settings:
     droplet_host: str = os.getenv("DROPLET_HOST", "")
     vllm_api_key: str = os.getenv("VLLM_API_KEY", "")
-    llm_url: str = os.getenv("LLM_URL", "")
-    embed_url: str = os.getenv("EMBED_URL", "")
+    llm_url: str = _server_url("LLM_URL", 8000)
+    embed_url: str = _server_url("EMBED_URL", 8001)
     llm_model: str = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
     # gpt-oss always reasons before answering; "low" keeps that short. Leave empty
     # for models that do not take the parameter.

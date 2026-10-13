@@ -1,0 +1,2898 @@
+{
+  "generated_utc": "2026-10-13T07:23:00Z",
+  "dataset": {
+    "name": "MetroPT-3",
+    "source": "https://archive.ics.uci.edu/dataset/791/metropt+3+dataset",
+    "license": "CC BY 4.0",
+    "rows": 1516948,
+    "start": "2020-02-01 00:00:00",
+    "end": "2020-09-01 03:59:50",
+    "interval_s": 10
+  },
+  "protocol": {
+    "training_cutoff": "2020-04-18 00:00:00",
+    "lead_horizon_h": 24,
+    "post_buffer_h": 24,
+    "alarm_clear_s": 3600,
+    "tuning": {
+      "data": "before 2020-04-18 00:00:00",
+      "objective": "lowest mean delay to detect pre-failure sustained-load episodes",
+      "max_other_alarms": 2,
+      "delay_cap_s": 7200,
+      "sustained_load_min_s": 1200,
+      "loaded_current_a": 4.8,
+      "quantiles": [
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.85,
+        0.9,
+        0.925,
+        0.95,
+        0.96,
+        0.97,
+        0.98,
+        0.985,
+        0.99,
+        0.9925,
+        0.995,
+        0.9975,
+        0.999,
+        0.9995,
+        0.9999
+      ],
+      "durations_s": [
+        60,
+        120,
+        300,
+        600,
+        900,
+        1200,
+        1800
+      ]
+    },
+    "evaluation_period": {
+      "start": "2020-04-18 00:00:00",
+      "end": "2020-09-01 03:59:50",
+      "calendar_weeks": 17.75,
+      "observed_weeks": 14.354,
+      "excluded_hours": 286.0
+    }
+  },
+  "pre_failure_sustained_load_episodes": [
+    {
+      "start": "2020-03-06 21:42:25",
+      "end": "2020-03-06 22:58:14",
+      "minutes": 75.8
+    },
+    {
+      "start": "2020-03-09 07:25:25",
+      "end": "2020-03-09 07:53:30",
+      "minutes": 28.1
+    },
+    {
+      "start": "2020-03-11 05:15:30",
+      "end": "2020-03-11 06:10:11",
+      "minutes": 54.7
+    },
+    {
+      "start": "2020-03-11 18:29:41",
+      "end": "2020-03-11 18:59:14",
+      "minutes": 29.6
+    },
+    {
+      "start": "2020-03-12 00:17:35",
+      "end": "2020-03-12 11:49:50",
+      "minutes": 692.2
+    },
+    {
+      "start": "2020-03-26 04:00:30",
+      "end": "2020-03-26 04:52:12",
+      "minutes": 51.7
+    },
+    {
+      "start": "2020-03-27 07:12:10",
+      "end": "2020-03-27 11:38:11",
+      "minutes": 266.0
+    },
+    {
+      "start": "2020-03-28 07:22:24",
+      "end": "2020-03-28 08:49:39",
+      "minutes": 87.2
+    },
+    {
+      "start": "2020-03-28 23:11:09",
+      "end": "2020-03-29 19:49:14",
+      "minutes": 1238.1
+    },
+    {
+      "start": "2020-04-12 11:50:31",
+      "end": "2020-04-12 23:36:00",
+      "minutes": 705.5
+    }
+  ],
+  "sustained_load_episodes_total": 27,
+  "training": {
+    "hardware": {
+      "device": "mps",
+      "torch": "2.14.1",
+      "hip": null,
+      "cuda": null,
+      "gpu_name": null,
+      "gpu_memory_gb": null
+    },
+    "trained_on_mi300x": false,
+    "train_seconds_total": 1065.41,
+    "train_seconds_final_model": 211.33,
+    "score_windows_per_second": 159060.0,
+    "parameters": 89047,
+    "windows_scored": 1464406,
+    "share_of_rows_scored": 0.9654,
+    "config": {
+      "window": 192,
+      "tail": 48,
+      "latent": 16,
+      "channels": [
+        32,
+        64,
+        64,
+        32
+      ],
+      "epochs": 20,
+      "batch_size": 1024,
+      "lr": 0.001,
+      "weight_decay": 1e-05,
+      "trim_fraction": 0.1,
+      "trim_warmup_epochs": 1,
+      "folds": 5,
+      "seed": 7,
+      "score_batch": 8192
+    },
+    "run": {
+      "finished_utc": "2026-10-13T07:17:04Z",
+      "host": "ipsec-10-2-0-103.vpn.gatech.edu",
+      "platform": "macOS-26.5.1-arm64-arm-64bit",
+      "git_commit": "6270354",
+      "smoke": false
+    }
+  },
+  "methods": [
+    {
+      "key": "faultline",
+      "label": "Faultline (conv autoencoder)",
+      "kind": "detector",
+      "params": {
+        "threshold": 0.27151,
+        "threshold_quantile": 0.96,
+        "duration_s": 1200,
+        "smoothing": "2min"
+      },
+      "tuning": {
+        "feasible": true,
+        "proxies_detected": 2,
+        "proxies_total": 10,
+        "mean_delay_min": 100.5,
+        "other_alarms": 1
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "window_start": "2020-04-18 00:00:00",
+          "window_end": "2020-04-18 23:59:00",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2020-04-18 01:15:41",
+          "lead_before_start_h": -1.261,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F2",
+          "window_start": "2020-05-29 23:30:00",
+          "window_end": "2020-05-30 06:00:00",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2020-05-29 23:36:24",
+          "lead_before_start_h": -0.107,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F3",
+          "window_start": "2020-06-05 10:00:00",
+          "window_end": "2020-06-07 14:30:00",
+          "maintenance": "2020-06-08 16:00:00",
+          "detected": true,
+          "first_alarm": "2020-06-05 10:11:18",
+          "lead_before_start_h": -0.188,
+          "lead_before_maintenance_h": 77.812,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F4",
+          "window_start": "2020-07-15 14:30:00",
+          "window_end": "2020-07-15 19:00:00",
+          "maintenance": "2020-07-16 00:00:00",
+          "detected": true,
+          "first_alarm": "2020-07-15 12:49:05",
+          "lead_before_start_h": 1.682,
+          "lead_before_maintenance_h": 11.182,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        }
+      ],
+      "summary": {
+        "failures_detected": 4,
+        "failures_missed": 0,
+        "detected_before_window_start": 1,
+        "median_lead_before_start_h": -0.147,
+        "alarms_total": 29,
+        "alarms_in_tuning_period": 4,
+        "false_alarms": 21,
+        "false_alarms_per_week": 1.183,
+        "false_alarms_per_observed_week": 1.463,
+        "false_alarms_during_sustained_load": 9
+      },
+      "alarms": [
+        {
+          "id": "A001",
+          "fire": "2020-03-28 07:46:31",
+          "onset": "2020-03-28 07:26:22",
+          "end": "2020-03-28 07:52:58",
+          "active_minutes": 6.5,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.4659,
+              "error": 1.6418
+            },
+            {
+              "signal": "TP3",
+              "share": 0.173,
+              "error": 0.6096
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1693,
+              "error": 0.5967
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0825,
+              "error": 0.2909
+            },
+            {
+              "signal": "H1",
+              "share": 0.0525,
+              "error": 0.185
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.04,
+              "error": 0.1411
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0167,
+              "error": 0.0587
+            }
+          ]
+        },
+        {
+          "id": "A002",
+          "fire": "2020-03-29 11:23:20",
+          "onset": "2020-03-29 11:03:11",
+          "end": "2020-03-29 17:22:41",
+          "active_minutes": 359.4,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "Oil_temperature",
+              "share": 0.541,
+              "error": 1.0985
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.1524,
+              "error": 0.3095
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0999,
+              "error": 0.2028
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0916,
+              "error": 0.186
+            },
+            {
+              "signal": "TP2",
+              "share": 0.069,
+              "error": 0.1401
+            },
+            {
+              "signal": "H1",
+              "share": 0.0362,
+              "error": 0.0735
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0099,
+              "error": 0.02
+            }
+          ]
+        },
+        {
+          "id": "A003",
+          "fire": "2020-04-06 11:50:00",
+          "onset": "2020-04-06 11:29:51",
+          "end": "2020-04-06 11:59:15",
+          "active_minutes": 9.2,
+          "attribution": "tuning_period",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.2536,
+              "error": 4.7673
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1916,
+              "error": 3.6014
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1888,
+              "error": 3.549
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1861,
+              "error": 3.4982
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.1215,
+              "error": 2.2832
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0509,
+              "error": 0.9559
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0075,
+              "error": 0.1417
+            }
+          ]
+        },
+        {
+          "id": "A004",
+          "fire": "2020-04-12 12:11:40",
+          "onset": "2020-04-12 11:51:31",
+          "end": "2020-04-12 23:44:06",
+          "active_minutes": 692.4,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.8459,
+              "error": 16.8815
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0524,
+              "error": 1.0461
+            },
+            {
+              "signal": "H1",
+              "share": 0.0362,
+              "error": 0.7232
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0355,
+              "error": 0.7086
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0111,
+              "error": 0.2223
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0107,
+              "error": 0.2141
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0081,
+              "error": 0.1611
+            }
+          ]
+        },
+        {
+          "id": "A005",
+          "fire": "2020-04-18 01:15:41",
+          "onset": "2020-04-18 00:55:32",
+          "end": "2020-04-19 02:05:11",
+          "active_minutes": 1489.5,
+          "attribution": "F1",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.4129,
+              "error": 11.011
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1877,
+              "error": 5.0051
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1642,
+              "error": 4.3789
+            },
+            {
+              "signal": "H1",
+              "share": 0.1393,
+              "error": 3.7144
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0534,
+              "error": 1.4228
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0224,
+              "error": 0.5971
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0201,
+              "error": 0.5363
+            }
+          ]
+        },
+        {
+          "id": "A006",
+          "fire": "2020-04-25 00:57:08",
+          "onset": "2020-04-25 00:36:59",
+          "end": "2020-04-25 01:10:51",
+          "active_minutes": 13.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.6924,
+              "error": 6.9532
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1174,
+              "error": 1.1792
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0844,
+              "error": 0.8479
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0839,
+              "error": 0.8429
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0142,
+              "error": 0.1428
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0069,
+              "error": 0.069
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0008,
+              "error": 0.0077
+            }
+          ]
+        },
+        {
+          "id": "A007",
+          "fire": "2020-04-27 19:07:56",
+          "onset": "2020-04-27 18:47:47",
+          "end": "2020-04-27 19:08:26",
+          "active_minutes": 0.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.4431,
+              "error": 5.0274
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1358,
+              "error": 1.5414
+            },
+            {
+              "signal": "H1",
+              "share": 0.1351,
+              "error": 1.5328
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.086,
+              "error": 0.9758
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0737,
+              "error": 0.8357
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0682,
+              "error": 0.7737
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0581,
+              "error": 0.6594
+            }
+          ]
+        },
+        {
+          "id": "A008",
+          "fire": "2020-04-29 03:49:16",
+          "onset": "2020-04-29 03:29:07",
+          "end": "2020-04-29 04:12:44",
+          "active_minutes": 23.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.2932,
+              "error": 3.1441
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1703,
+              "error": 1.8259
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1604,
+              "error": 1.72
+            },
+            {
+              "signal": "H1",
+              "share": 0.1516,
+              "error": 1.6256
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0775,
+              "error": 0.831
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0774,
+              "error": 0.8297
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0698,
+              "error": 0.7485
+            }
+          ]
+        },
+        {
+          "id": "A009",
+          "fire": "2020-04-29 22:19:21",
+          "onset": "2020-04-29 21:59:12",
+          "end": "2020-04-29 22:21:20",
+          "active_minutes": 2.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.283,
+              "error": 2.0865
+            },
+            {
+              "signal": "H1",
+              "share": 0.1831,
+              "error": 1.3502
+            },
+            {
+              "signal": "TP2",
+              "share": 0.164,
+              "error": 1.2093
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1195,
+              "error": 0.8811
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.094,
+              "error": 0.6928
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0868,
+              "error": 0.6399
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0697,
+              "error": 0.5138
+            }
+          ]
+        },
+        {
+          "id": "A010",
+          "fire": "2020-05-13 14:04:34",
+          "onset": "2020-05-13 13:44:34",
+          "end": "2020-05-14 00:56:48",
+          "active_minutes": 652.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.2936,
+              "error": 15.1625
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1785,
+              "error": 9.2207
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1758,
+              "error": 9.0777
+            },
+            {
+              "signal": "H1",
+              "share": 0.1247,
+              "error": 6.4396
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0856,
+              "error": 4.4214
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0804,
+              "error": 4.1503
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0615,
+              "error": 3.1747
+            }
+          ]
+        },
+        {
+          "id": "A011",
+          "fire": "2020-05-18 05:15:47",
+          "onset": "2020-05-18 04:55:38",
+          "end": "2020-05-18 05:31:49",
+          "active_minutes": 16.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3457,
+              "error": 5.5076
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1503,
+              "error": 2.3938
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.1223,
+              "error": 1.9479
+            },
+            {
+              "signal": "H1",
+              "share": 0.1166,
+              "error": 1.8577
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1089,
+              "error": 1.7349
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1023,
+              "error": 1.6292
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.054,
+              "error": 0.8599
+            }
+          ]
+        },
+        {
+          "id": "A012",
+          "fire": "2020-05-19 02:12:48",
+          "onset": "2020-05-19 01:52:39",
+          "end": "2020-05-19 02:40:33",
+          "active_minutes": 27.8,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.6937,
+              "error": 7.3447
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1245,
+              "error": 1.3183
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1197,
+              "error": 1.267
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0282,
+              "error": 0.2987
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0197,
+              "error": 0.2081
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0111,
+              "error": 0.1172
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0032,
+              "error": 0.0343
+            }
+          ]
+        },
+        {
+          "id": "A013",
+          "fire": "2020-05-19 10:29:08",
+          "onset": "2020-05-19 10:09:08",
+          "end": "2020-05-19 10:59:51",
+          "active_minutes": 30.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.377,
+              "error": 1.9644
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1704,
+              "error": 0.888
+            },
+            {
+              "signal": "H1",
+              "share": 0.1451,
+              "error": 0.7559
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.087,
+              "error": 0.4532
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0805,
+              "error": 0.4194
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0771,
+              "error": 0.4019
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.063,
+              "error": 0.3283
+            }
+          ]
+        },
+        {
+          "id": "A014",
+          "fire": "2020-05-19 22:43:46",
+          "onset": "2020-05-19 22:23:37",
+          "end": "2020-05-20 19:48:20",
+          "active_minutes": 1264.6,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3144,
+              "error": 12.0137
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1864,
+              "error": 7.1216
+            },
+            {
+              "signal": "H1",
+              "share": 0.1449,
+              "error": 5.5375
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1012,
+              "error": 3.8659
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0964,
+              "error": 3.6844
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0947,
+              "error": 3.6193
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0619,
+              "error": 2.3649
+            }
+          ]
+        },
+        {
+          "id": "A015",
+          "fire": "2020-05-21 18:11:35",
+          "onset": "2020-05-21 17:51:35",
+          "end": "2020-05-21 18:13:04",
+          "active_minutes": 1.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.4204,
+              "error": 1.6199
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1576,
+              "error": 0.6074
+            },
+            {
+              "signal": "H1",
+              "share": 0.1476,
+              "error": 0.5687
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0962,
+              "error": 0.3707
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0914,
+              "error": 0.3523
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0549,
+              "error": 0.2117
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0317,
+              "error": 0.1222
+            }
+          ]
+        },
+        {
+          "id": "A016",
+          "fire": "2020-05-23 10:04:50",
+          "onset": "2020-05-23 09:44:50",
+          "end": "2020-05-23 10:17:33",
+          "active_minutes": 12.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3883,
+              "error": 2.3352
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1644,
+              "error": 0.9887
+            },
+            {
+              "signal": "H1",
+              "share": 0.1552,
+              "error": 0.9333
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0952,
+              "error": 0.5726
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0882,
+              "error": 0.5305
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0748,
+              "error": 0.4495
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0339,
+              "error": 0.2041
+            }
+          ]
+        },
+        {
+          "id": "A017",
+          "fire": "2020-05-29 23:36:24",
+          "onset": "2020-05-29 23:16:15",
+          "end": "2020-05-30 06:06:01",
+          "active_minutes": 389.6,
+          "attribution": "F2",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3452,
+              "error": 10.3989
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1566,
+              "error": 4.7184
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1272,
+              "error": 3.832
+            },
+            {
+              "signal": "H1",
+              "share": 0.1221,
+              "error": 3.6772
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1214,
+              "error": 3.656
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0778,
+              "error": 2.3454
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0498,
+              "error": 1.4989
+            }
+          ]
+        },
+        {
+          "id": "A018",
+          "fire": "2020-06-01 15:10:53",
+          "onset": "2020-06-01 14:50:44",
+          "end": "2020-06-01 15:48:04",
+          "active_minutes": 37.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.6926,
+              "error": 8.781
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0899,
+              "error": 1.1401
+            },
+            {
+              "signal": "H1",
+              "share": 0.0864,
+              "error": 1.0954
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0444,
+              "error": 0.563
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0394,
+              "error": 0.4994
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0376,
+              "error": 0.4767
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0097,
+              "error": 0.123
+            }
+          ]
+        },
+        {
+          "id": "A019",
+          "fire": "2020-06-02 19:39:22",
+          "onset": "2020-06-02 19:19:13",
+          "end": "2020-06-02 19:54:35",
+          "active_minutes": 15.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.6794,
+              "error": 8.1567
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1224,
+              "error": 1.4691
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1169,
+              "error": 1.4035
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0464,
+              "error": 0.5575
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0203,
+              "error": 0.2433
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0119,
+              "error": 0.1429
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0028,
+              "error": 0.0333
+            }
+          ]
+        },
+        {
+          "id": "A020",
+          "fire": "2020-06-03 10:28:09",
+          "onset": "2020-06-03 10:08:09",
+          "end": "2020-06-03 11:19:33",
+          "active_minutes": 51.4,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3535,
+              "error": 5.0862
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1624,
+              "error": 2.336
+            },
+            {
+              "signal": "H1",
+              "share": 0.1384,
+              "error": 1.991
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1122,
+              "error": 1.6147
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1052,
+              "error": 1.5137
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0661,
+              "error": 0.951
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0623,
+              "error": 0.8957
+            }
+          ]
+        },
+        {
+          "id": "A021",
+          "fire": "2020-06-05 10:11:18",
+          "onset": "2020-06-05 09:51:09",
+          "end": "2020-06-08 13:07:12",
+          "active_minutes": 4495.9,
+          "attribution": "F3",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3338,
+              "error": 12.2416
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1848,
+              "error": 6.7786
+            },
+            {
+              "signal": "H1",
+              "share": 0.1408,
+              "error": 5.1659
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1101,
+              "error": 4.0396
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1038,
+              "error": 3.8072
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0672,
+              "error": 2.4663
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0594,
+              "error": 2.1786
+            }
+          ]
+        },
+        {
+          "id": "A022",
+          "fire": "2020-06-22 15:30:56",
+          "onset": "2020-06-22 15:10:49",
+          "end": "2020-06-25 05:08:35",
+          "active_minutes": 3697.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "top_signals": [
+            {
+              "signal": "TP3",
+              "share": 0.3286,
+              "error": 1.3776
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.321,
+              "error": 1.3456
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.2008,
+              "error": 0.8417
+            },
+            {
+              "signal": "H1",
+              "share": 0.0541,
+              "error": 0.2267
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0448,
+              "error": 0.1877
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.044,
+              "error": 0.1844
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0068,
+              "error": 0.0283
+            }
+          ]
+        },
+        {
+          "id": "A023",
+          "fire": "2020-07-08 17:59:48",
+          "onset": "2020-07-08 17:39:48",
+          "end": "2020-07-08 19:24:33",
+          "active_minutes": 84.8,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Reservoirs",
+              "share": 0.3273,
+              "error": 10.5634
+            },
+            {
+              "signal": "TP3",
+              "share": 0.3206,
+              "error": 10.3452
+            },
+            {
+              "signal": "H1",
+              "share": 0.1162,
+              "error": 3.7509
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.1007,
+              "error": 3.2507
+            },
+            {
+              "signal": "TP2",
+              "share": 0.087,
+              "error": 2.8086
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0375,
+              "error": 1.2114
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0105,
+              "error": 0.3401
+            }
+          ]
+        },
+        {
+          "id": "A024",
+          "fire": "2020-07-08 21:31:25",
+          "onset": "2020-07-08 21:11:16",
+          "end": "2020-07-08 21:32:35",
+          "active_minutes": 1.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Reservoirs",
+              "share": 0.2615,
+              "error": 1.6186
+            },
+            {
+              "signal": "TP3",
+              "share": 0.2607,
+              "error": 1.6136
+            },
+            {
+              "signal": "H1",
+              "share": 0.2177,
+              "error": 1.3474
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1794,
+              "error": 1.1103
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0501,
+              "error": 0.3099
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.018,
+              "error": 0.1116
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0127,
+              "error": 0.0787
+            }
+          ]
+        },
+        {
+          "id": "A025",
+          "fire": "2020-07-14 02:22:22",
+          "onset": "2020-07-14 02:02:13",
+          "end": "2020-07-14 03:02:31",
+          "active_minutes": 40.1,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.7188,
+              "error": 6.8086
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0826,
+              "error": 0.7823
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0804,
+              "error": 0.7615
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0649,
+              "error": 0.6151
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0267,
+              "error": 0.2525
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.025,
+              "error": 0.2368
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0016,
+              "error": 0.0149
+            }
+          ]
+        },
+        {
+          "id": "A026",
+          "fire": "2020-07-15 12:49:05",
+          "onset": "2020-07-15 12:29:05",
+          "end": "2020-07-15 19:00:20",
+          "active_minutes": 371.2,
+          "attribution": "F4",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "DV_pressure",
+              "share": 0.3815,
+              "error": 1.9798
+            },
+            {
+              "signal": "H1",
+              "share": 0.1805,
+              "error": 0.9367
+            },
+            {
+              "signal": "TP2",
+              "share": 0.1794,
+              "error": 0.931
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.1119,
+              "error": 0.5808
+            },
+            {
+              "signal": "TP3",
+              "share": 0.1107,
+              "error": 0.5746
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0182,
+              "error": 0.0944
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0177,
+              "error": 0.0921
+            }
+          ]
+        },
+        {
+          "id": "A027",
+          "fire": "2020-07-22 07:19:11",
+          "onset": "2020-07-22 06:59:04",
+          "end": "2020-07-22 13:12:26",
+          "active_minutes": 353.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "Oil_temperature",
+              "share": 0.7835,
+              "error": 2.3057
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0619,
+              "error": 0.1822
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0595,
+              "error": 0.175
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0424,
+              "error": 0.1247
+            },
+            {
+              "signal": "H1",
+              "share": 0.0232,
+              "error": 0.0683
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0196,
+              "error": 0.0577
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.01,
+              "error": 0.0293
+            }
+          ]
+        },
+        {
+          "id": "A028",
+          "fire": "2020-07-31 01:41:59",
+          "onset": "2020-07-31 01:21:50",
+          "end": "2020-07-31 02:09:04",
+          "active_minutes": 27.1,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.7337,
+              "error": 7.0239
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0897,
+              "error": 0.8587
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0874,
+              "error": 0.8365
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.0672,
+              "error": 0.6436
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0148,
+              "error": 0.1419
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0059,
+              "error": 0.0567
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0013,
+              "error": 0.0123
+            }
+          ]
+        },
+        {
+          "id": "A029",
+          "fire": "2020-08-03 10:16:15",
+          "onset": "2020-08-03 09:56:06",
+          "end": "2020-08-03 10:25:10",
+          "active_minutes": 8.9,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "top_signals": [
+            {
+              "signal": "H1",
+              "share": 0.7231,
+              "error": 7.036
+            },
+            {
+              "signal": "Reservoirs",
+              "share": 0.0929,
+              "error": 0.904
+            },
+            {
+              "signal": "TP3",
+              "share": 0.0909,
+              "error": 0.8845
+            },
+            {
+              "signal": "Oil_temperature",
+              "share": 0.07,
+              "error": 0.6808
+            },
+            {
+              "signal": "Motor_current",
+              "share": 0.0153,
+              "error": 0.1492
+            },
+            {
+              "signal": "TP2",
+              "share": 0.0064,
+              "error": 0.0621
+            },
+            {
+              "signal": "DV_pressure",
+              "share": 0.0014,
+              "error": 0.0137
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "static_tuned",
+      "label": "Static thresholds, tuned like the detector",
+      "kind": "baseline",
+      "params": {
+        "oil_temperature": {
+          "threshold": 69.75,
+          "quantile": 0.925,
+          "duration_s": 1200,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 9,
+            "proxies_total": 10,
+            "mean_delay_min": 33.6,
+            "other_alarms": 2
+          },
+          "unit": "\u00b0C"
+        },
+        "motor_current": {
+          "threshold": 3.75,
+          "quantile": 0.7,
+          "duration_s": 1200,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 9,
+            "proxies_total": 10,
+            "mean_delay_min": 29.9,
+            "other_alarms": 1
+          },
+          "unit": "A"
+        },
+        "pressure_drop_rate": {
+          "threshold": 0.061,
+          "quantile": 0.5,
+          "duration_s": 1800,
+          "tuning": {
+            "feasible": true,
+            "proxies_detected": 0,
+            "proxies_total": 10,
+            "mean_delay_min": 120.0,
+            "other_alarms": 0
+          },
+          "unit": "bar/min"
+        }
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "window_start": "2020-04-18 00:00:00",
+          "window_end": "2020-04-18 23:59:00",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2020-04-18 00:44:08",
+          "lead_before_start_h": -0.736,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F2",
+          "window_start": "2020-05-29 23:30:00",
+          "window_end": "2020-05-30 06:00:00",
+          "maintenance": null,
+          "detected": true,
+          "first_alarm": "2020-05-29 23:35:05",
+          "lead_before_start_h": -0.085,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F3",
+          "window_start": "2020-06-05 10:00:00",
+          "window_end": "2020-06-07 14:30:00",
+          "maintenance": "2020-06-08 16:00:00",
+          "detected": true,
+          "first_alarm": "2020-06-05 10:08:39",
+          "lead_before_start_h": -0.144,
+          "lead_before_maintenance_h": 77.856,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        },
+        {
+          "id": "F4",
+          "window_start": "2020-07-15 14:30:00",
+          "window_end": "2020-07-15 19:00:00",
+          "maintenance": "2020-07-16 00:00:00",
+          "detected": true,
+          "first_alarm": "2020-07-15 06:53:01",
+          "lead_before_start_h": 7.616,
+          "lead_before_maintenance_h": 17.116,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        }
+      ],
+      "summary": {
+        "failures_detected": 4,
+        "failures_missed": 0,
+        "detected_before_window_start": 1,
+        "median_lead_before_start_h": -0.114,
+        "alarms_total": 37,
+        "alarms_in_tuning_period": 12,
+        "false_alarms": 20,
+        "false_alarms_per_week": 1.127,
+        "false_alarms_per_observed_week": 1.393,
+        "false_alarms_during_sustained_load": 10
+      },
+      "rules": {
+        "oil_temperature": {
+          "label": "Oil temperature high",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2020-04-18 00:44:18",
+              "lead_before_start_h": -0.738,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2020-05-29 23:37:34",
+              "lead_before_start_h": -0.126,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": true,
+              "first_alarm": "2020-06-05 10:10:28",
+              "lead_before_start_h": -0.174,
+              "lead_before_maintenance_h": 77.826,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": true,
+              "first_alarm": "2020-07-15 06:53:01",
+              "lead_before_start_h": 7.616,
+              "lead_before_maintenance_h": 17.116,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            }
+          ],
+          "summary": {
+            "failures_detected": 4,
+            "failures_missed": 0,
+            "detected_before_window_start": 1,
+            "median_lead_before_start_h": -0.15,
+            "alarms_total": 29,
+            "alarms_in_tuning_period": 11,
+            "false_alarms": 13,
+            "false_alarms_per_week": 0.732,
+            "false_alarms_per_observed_week": 0.906,
+            "false_alarms_during_sustained_load": 8
+          }
+        },
+        "motor_current": {
+          "label": "Motor current high",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2020-04-18 00:44:08",
+              "lead_before_start_h": -0.736,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": true,
+              "first_alarm": "2020-05-29 23:35:05",
+              "lead_before_start_h": -0.085,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": true,
+              "first_alarm": "2020-06-05 10:08:39",
+              "lead_before_start_h": -0.144,
+              "lead_before_maintenance_h": 77.856,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": true,
+              "first_alarm": "2020-07-15 14:45:32",
+              "lead_before_start_h": -0.259,
+              "lead_before_maintenance_h": 9.241,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            }
+          ],
+          "summary": {
+            "failures_detected": 4,
+            "failures_missed": 0,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": -0.202,
+            "alarms_total": 27,
+            "alarms_in_tuning_period": 10,
+            "false_alarms": 13,
+            "false_alarms_per_week": 0.732,
+            "false_alarms_per_observed_week": 0.906,
+            "false_alarms_during_sustained_load": 10
+          }
+        },
+        "pressure_drop_rate": {
+          "label": "Reservoir pressure falling fast",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 4,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 3,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 3,
+            "false_alarms_per_week": 0.169,
+            "false_alarms_per_observed_week": 0.209,
+            "false_alarms_during_sustained_load": 0
+          }
+        }
+      },
+      "alarms": [
+        {
+          "id": "S001",
+          "fire": "2020-03-05 10:07:09",
+          "onset": "2020-03-05 09:47:09",
+          "end": "2020-03-05 10:08:48",
+          "active_minutes": 1.6,
+          "attribution": "tuning_period",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S002",
+          "fire": "2020-03-06 22:02:25",
+          "onset": "2020-03-06 21:42:25",
+          "end": "2020-03-06 23:05:20",
+          "active_minutes": 62.9,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S003",
+          "fire": "2020-03-09 07:45:34",
+          "onset": "2020-03-09 07:25:25",
+          "end": "2020-03-09 07:57:47",
+          "active_minutes": 12.2,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S004",
+          "fire": "2020-03-11 05:35:20",
+          "onset": "2020-03-11 05:15:20",
+          "end": "2020-03-11 06:15:18",
+          "active_minutes": 40.0,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S005",
+          "fire": "2020-03-11 18:49:48",
+          "onset": "2020-03-11 18:29:41",
+          "end": "2020-03-11 18:59:14",
+          "active_minutes": 9.4,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "oil_temperature",
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S006",
+          "fire": "2020-03-12 00:36:06",
+          "onset": "2020-03-12 00:16:06",
+          "end": "2020-03-12 11:57:35",
+          "active_minutes": 681.5,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S007",
+          "fire": "2020-03-12 15:49:55",
+          "onset": "2020-03-12 15:29:55",
+          "end": "2020-03-12 15:50:25",
+          "active_minutes": 0.5,
+          "attribution": "tuning_period",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S008",
+          "fire": "2020-03-26 04:20:39",
+          "onset": "2020-03-26 04:00:30",
+          "end": "2020-03-26 04:57:19",
+          "active_minutes": 36.7,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S009",
+          "fire": "2020-03-27 07:32:10",
+          "onset": "2020-03-27 07:12:10",
+          "end": "2020-03-27 11:46:26",
+          "active_minutes": 254.3,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S010",
+          "fire": "2020-03-28 07:42:33",
+          "onset": "2020-03-28 07:22:24",
+          "end": "2020-03-29 19:49:14",
+          "active_minutes": 2166.7,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S011",
+          "fire": "2020-04-12 12:10:31",
+          "onset": "2020-04-12 11:50:31",
+          "end": "2020-04-12 23:39:38",
+          "active_minutes": 689.1,
+          "attribution": "tuning_period",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S012",
+          "fire": "2020-04-13 18:46:51",
+          "onset": "2020-04-13 18:26:51",
+          "end": "2020-04-13 19:27:16",
+          "active_minutes": 40.4,
+          "attribution": "tuning_period",
+          "during_sustained_load": false,
+          "rules": [
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S013",
+          "fire": "2020-04-18 00:44:08",
+          "onset": "2020-04-18 00:23:59",
+          "end": "2020-04-19 02:57:09",
+          "active_minutes": 1573.0,
+          "attribution": "F1",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S014",
+          "fire": "2020-04-20 05:08:19",
+          "onset": "2020-04-20 04:48:18",
+          "end": "2020-04-21 01:16:52",
+          "active_minutes": 1208.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S015",
+          "fire": "2020-04-29 03:45:38",
+          "onset": "2020-04-29 03:25:29",
+          "end": "2020-04-29 04:06:07",
+          "active_minutes": 20.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S016",
+          "fire": "2020-05-10 23:11:06",
+          "onset": "2020-05-10 22:50:57",
+          "end": "2020-05-10 23:13:25",
+          "active_minutes": 2.3,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S017",
+          "fire": "2020-05-13 14:04:04",
+          "onset": "2020-05-13 13:44:04",
+          "end": "2020-05-14 00:56:48",
+          "active_minutes": 652.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S018",
+          "fire": "2020-05-18 05:13:09",
+          "onset": "2020-05-18 04:53:09",
+          "end": "2020-05-18 05:26:12",
+          "active_minutes": 13.1,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S019",
+          "fire": "2020-05-19 02:09:00",
+          "onset": "2020-05-19 01:38:57",
+          "end": "2020-05-19 02:13:57",
+          "active_minutes": 5.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "pressure_drop_rate"
+          ]
+        },
+        {
+          "id": "S020",
+          "fire": "2020-05-19 10:25:59",
+          "onset": "2020-05-19 10:05:50",
+          "end": "2020-05-19 10:59:51",
+          "active_minutes": 33.9,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S021",
+          "fire": "2020-05-19 22:40:27",
+          "onset": "2020-05-19 22:20:18",
+          "end": "2020-05-20 19:48:20",
+          "active_minutes": 1267.9,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S022",
+          "fire": "2020-05-23 10:01:32",
+          "onset": "2020-05-23 09:41:31",
+          "end": "2020-05-23 10:23:00",
+          "active_minutes": 21.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S023",
+          "fire": "2020-05-29 23:35:05",
+          "onset": "2020-05-29 23:14:56",
+          "end": "2020-05-30 06:04:32",
+          "active_minutes": 389.4,
+          "attribution": "F2",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S024",
+          "fire": "2020-06-01 15:09:54",
+          "onset": "2020-06-01 14:49:54",
+          "end": "2020-06-01 15:47:34",
+          "active_minutes": 37.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S025",
+          "fire": "2020-06-03 10:26:00",
+          "onset": "2020-06-03 10:06:00",
+          "end": "2020-06-03 11:18:43",
+          "active_minutes": 52.7,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S026",
+          "fire": "2020-06-05 10:08:39",
+          "onset": "2020-06-05 09:48:30",
+          "end": "2020-06-08 13:07:12",
+          "active_minutes": 4498.6,
+          "attribution": "F3",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S027",
+          "fire": "2020-06-22 15:25:42",
+          "onset": "2020-06-22 15:05:41",
+          "end": "2020-06-25 05:08:35",
+          "active_minutes": 3702.9,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S028",
+          "fire": "2020-07-08 18:03:56",
+          "onset": "2020-07-08 17:43:56",
+          "end": "2020-07-08 19:24:53",
+          "active_minutes": 81.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S029",
+          "fire": "2020-07-08 21:30:36",
+          "onset": "2020-07-08 21:10:36",
+          "end": "2020-07-08 22:35:51",
+          "active_minutes": 65.2,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S030",
+          "fire": "2020-07-15 06:53:01",
+          "onset": "2020-07-15 06:33:01",
+          "end": "2020-07-15 19:15:12",
+          "active_minutes": 742.2,
+          "attribution": "F4",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature",
+            "motor_current"
+          ]
+        },
+        {
+          "id": "S031",
+          "fire": "2020-07-16 19:01:21",
+          "onset": "2020-07-16 18:41:12",
+          "end": "2020-07-16 19:14:24",
+          "active_minutes": 13.1,
+          "attribution": "buffer:F4",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S032",
+          "fire": "2020-07-17 04:56:13",
+          "onset": "2020-07-17 04:36:13",
+          "end": "2020-07-17 05:20:41",
+          "active_minutes": 24.5,
+          "attribution": "false_alarm",
+          "during_sustained_load": true,
+          "rules": [
+            "motor_current",
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S033",
+          "fire": "2020-07-17 13:14:47",
+          "onset": "2020-07-17 12:54:38",
+          "end": "2020-07-17 13:38:45",
+          "active_minutes": 24.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S034",
+          "fire": "2020-07-17 16:50:59",
+          "onset": "2020-07-17 16:30:59",
+          "end": "2020-07-17 16:53:17",
+          "active_minutes": 2.3,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S035",
+          "fire": "2020-07-22 07:02:06",
+          "onset": "2020-07-22 06:42:05",
+          "end": "2020-07-22 13:04:24",
+          "active_minutes": 362.3,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "oil_temperature"
+          ]
+        },
+        {
+          "id": "S036",
+          "fire": "2020-07-31 01:30:35",
+          "onset": "2020-07-31 01:00:31",
+          "end": "2020-07-31 01:33:43",
+          "active_minutes": 3.1,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "pressure_drop_rate"
+          ]
+        },
+        {
+          "id": "S037",
+          "fire": "2020-08-03 10:05:11",
+          "onset": "2020-08-03 09:35:08",
+          "end": "2020-08-03 10:10:08",
+          "active_minutes": 5.0,
+          "attribution": "false_alarm",
+          "during_sustained_load": false,
+          "rules": [
+            "pressure_drop_rate"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "static_envelope",
+      "label": "Static thresholds at the pre-failure envelope",
+      "kind": "baseline",
+      "params": {
+        "oil_temperature": {
+          "threshold": 83.125,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "\u00b0C"
+        },
+        "motor_current": {
+          "threshold": 9.295,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "A"
+        },
+        "pressure_drop_rate": {
+          "threshold": 9.052,
+          "quantile": 1.0,
+          "duration_s": 60,
+          "unit": "bar/min"
+        }
+      },
+      "failures": [
+        {
+          "id": "F1",
+          "window_start": "2020-04-18 00:00:00",
+          "window_end": "2020-04-18 23:59:00",
+          "maintenance": null,
+          "detected": false,
+          "first_alarm": null,
+          "lead_before_start_h": null,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": null,
+          "alarms_in_span": 0
+        },
+        {
+          "id": "F2",
+          "window_start": "2020-05-29 23:30:00",
+          "window_end": "2020-05-30 06:00:00",
+          "maintenance": null,
+          "detected": false,
+          "first_alarm": null,
+          "lead_before_start_h": null,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": null,
+          "alarms_in_span": 0
+        },
+        {
+          "id": "F3",
+          "window_start": "2020-06-05 10:00:00",
+          "window_end": "2020-06-07 14:30:00",
+          "maintenance": "2020-06-08 16:00:00",
+          "detected": false,
+          "first_alarm": null,
+          "lead_before_start_h": null,
+          "lead_before_maintenance_h": null,
+          "first_alarm_after_window_end": null,
+          "alarms_in_span": 0
+        },
+        {
+          "id": "F4",
+          "window_start": "2020-07-15 14:30:00",
+          "window_end": "2020-07-15 19:00:00",
+          "maintenance": "2020-07-16 00:00:00",
+          "detected": true,
+          "first_alarm": "2020-07-15 14:34:28",
+          "lead_before_start_h": -0.074,
+          "lead_before_maintenance_h": 9.426,
+          "first_alarm_after_window_end": false,
+          "alarms_in_span": 1
+        }
+      ],
+      "summary": {
+        "failures_detected": 1,
+        "failures_missed": 3,
+        "detected_before_window_start": 0,
+        "median_lead_before_start_h": -0.074,
+        "alarms_total": 1,
+        "alarms_in_tuning_period": 0,
+        "false_alarms": 0,
+        "false_alarms_per_week": 0.0,
+        "false_alarms_per_observed_week": 0.0,
+        "false_alarms_during_sustained_load": 0
+      },
+      "rules": {
+        "oil_temperature": {
+          "label": "Oil temperature high",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": true,
+              "first_alarm": "2020-07-15 14:34:28",
+              "lead_before_start_h": -0.074,
+              "lead_before_maintenance_h": 9.426,
+              "first_alarm_after_window_end": false,
+              "alarms_in_span": 1
+            }
+          ],
+          "summary": {
+            "failures_detected": 1,
+            "failures_missed": 3,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": -0.074,
+            "alarms_total": 1,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "motor_current": {
+          "label": "Motor current high",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 4,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 0,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        },
+        "pressure_drop_rate": {
+          "label": "Reservoir pressure falling fast",
+          "failures": [
+            {
+              "id": "F1",
+              "window_start": "2020-04-18 00:00:00",
+              "window_end": "2020-04-18 23:59:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F2",
+              "window_start": "2020-05-29 23:30:00",
+              "window_end": "2020-05-30 06:00:00",
+              "maintenance": null,
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F3",
+              "window_start": "2020-06-05 10:00:00",
+              "window_end": "2020-06-07 14:30:00",
+              "maintenance": "2020-06-08 16:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            },
+            {
+              "id": "F4",
+              "window_start": "2020-07-15 14:30:00",
+              "window_end": "2020-07-15 19:00:00",
+              "maintenance": "2020-07-16 00:00:00",
+              "detected": false,
+              "first_alarm": null,
+              "lead_before_start_h": null,
+              "lead_before_maintenance_h": null,
+              "first_alarm_after_window_end": null,
+              "alarms_in_span": 0
+            }
+          ],
+          "summary": {
+            "failures_detected": 0,
+            "failures_missed": 4,
+            "detected_before_window_start": 0,
+            "median_lead_before_start_h": null,
+            "alarms_total": 0,
+            "alarms_in_tuning_period": 0,
+            "false_alarms": 0,
+            "false_alarms_per_week": 0.0,
+            "false_alarms_per_observed_week": 0.0,
+            "false_alarms_during_sustained_load": 0
+          }
+        }
+      },
+      "alarms": [
+        {
+          "id": "E001",
+          "fire": "2020-07-15 14:34:28",
+          "onset": "2020-07-15 14:33:19",
+          "end": "2020-07-15 17:07:58",
+          "active_minutes": 153.5,
+          "attribution": "F4",
+          "during_sustained_load": true,
+          "rules": [
+            "oil_temperature"
+          ]
+        }
+      ]
+    }
+  ],
+  "sensitivity": {
+    "lead_horizon_h": {
+      "2": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.157,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": -0.188,
+            "F4": 1.682
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 3,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.157,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": -0.144,
+            "F4": null
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "6": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.162,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": -0.188,
+            "F4": 1.682
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 3,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.162,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": -0.144,
+            "F4": null
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "12": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.169,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": -0.188,
+            "F4": 1.682
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 4,
+          "false_alarms": 20,
+          "false_alarms_per_week": 1.113,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": -0.144,
+            "F4": 7.616
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "24": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 21,
+          "false_alarms_per_week": 1.183,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": -0.188,
+            "F4": 1.682
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 4,
+          "false_alarms": 20,
+          "false_alarms_per_week": 1.127,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": -0.144,
+            "F4": 7.616
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "48": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 19,
+          "false_alarms_per_week": 1.097,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": 47.531,
+            "F4": 36.127
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 4,
+          "false_alarms": 19,
+          "false_alarms_per_week": 1.097,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": 47.567,
+            "F4": 7.616
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "72": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 18,
+          "false_alarms_per_week": 1.066,
+          "lead_before_start_h": {
+            "F1": -1.261,
+            "F2": -0.107,
+            "F3": 62.344,
+            "F4": 36.127
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 4,
+          "false_alarms": 19,
+          "false_alarms_per_week": 1.125,
+          "lead_before_start_h": {
+            "F1": -0.736,
+            "F2": -0.085,
+            "F3": 47.567,
+            "F4": 7.616
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      },
+      "168": {
+        "faultline": {
+          "failures_detected": 4,
+          "false_alarms": 14,
+          "false_alarms_per_week": 0.907,
+          "lead_before_start_h": {
+            "F1": 131.806,
+            "F2": 157.419,
+            "F3": 154.393,
+            "F4": 164.503
+          }
+        },
+        "static_tuned": {
+          "failures_detected": 4,
+          "false_alarms": 15,
+          "false_alarms_per_week": 0.971,
+          "lead_before_start_h": {
+            "F1": 131.825,
+            "F2": 157.474,
+            "F3": 154.415,
+            "F4": 164.434
+          }
+        },
+        "static_envelope": {
+          "failures_detected": 1,
+          "false_alarms": 0,
+          "false_alarms_per_week": 0.0,
+          "lead_before_start_h": {
+            "F1": null,
+            "F2": null,
+            "F3": null,
+            "F4": -0.074
+          }
+        }
+      }
+    }
+  }
+}

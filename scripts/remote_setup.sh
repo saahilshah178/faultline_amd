@@ -23,7 +23,7 @@ remote 'echo connected: $(hostname), $(. /etc/os-release && echo "$PRETTY_NAME")
 
 mkdir -p "$REPO_ROOT/results/gpu"
 rsync -az -e "ssh ${SSH_OPTS[*]}" \
-  "$DROPLET_USER@$DROPLET_HOST:/root/faultline/results/gpu/serving_vram.txt" "$REPO_ROOT/results/gpu/" || true
+  "$DROPLET_USER@$DROPLET_HOST:/root/faultline/results/gpu/" "$REPO_ROOT/results/gpu/" || true
 
 cat <<MSG
 

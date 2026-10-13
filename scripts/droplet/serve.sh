@@ -39,13 +39,15 @@ COMMON=(
   --device /dev/kfd --device /dev/dri --group-add video
   --cap-add SYS_PTRACE --security-opt seccomp=unconfined --ipc=host
   -v /root/.cache/huggingface:/root/.cache/huggingface
-  -e HF_TOKEN -e VLLM_API_KEY
+  -e VLLM_API_KEY
 )
+# Neither model is gated; pass a Hugging Face token through only if one was given.
+[[ -n "$HF_TOKEN" ]] && COMMON+=(-e HF_TOKEN)
 
 wait_healthy() {
   local name="$1" port="$2" waited=0
   echo "waiting for $name on :$port (first start downloads the model; this can take a while)"
-  until curl -fsS -o /dev/null "http://127.0.0.1:$port/health"; do
+  until curl -fs -o /dev/null "http://127.0.0.1:$port/health" 2>/dev/null; do
     if [[ "$(docker inspect -f '{{.State.Running}}' "$name" 2>/dev/null)" != "true" ]]; then
       echo "error: container $name exited. Last log lines:" >&2
       docker logs --tail 80 "$name" >&2 || true
@@ -81,22 +83,33 @@ docker rm -f faultline-llm faultline-embed >/dev/null 2>&1 || true
 # The two servers are started one after the other: vLLM sizes its memory pool by
 # profiling free VRAM at startup and assumes nobody else changes theirs meanwhile.
 echo "== starting the LLM: $LLM_MODEL"
-LLM_ARGS=(--host 0.0.0.0 --port 8000 --gpu-memory-utilization "$LLM_GPU_FRACTION")
-LLM_ENV=(-e VLLM_ENGINE_READY_TIMEOUT_S=3600)
-case "$LLM_MODEL" in
-  openai/gpt-oss-*)
-    LLM_ENV+=(-e VLLM_ROCM_USE_AITER=1)
-    LLM_ARGS+=(--attention-backend ROCM_AITER_UNIFIED_ATTN --reasoning-parser openai_gptoss
-               --tool-call-parser openai --enable-auto-tool-choice)
-    ;;
-  Qwen/Qwen3-*)
-    LLM_ARGS+=(--reasoning-parser qwen3 --default-chat-template-kwargs '{"enable_thinking": false}')
-    ;;
-esac
-docker run -d --name faultline-llm "${COMMON[@]}" "${LLM_ENV[@]}" -p 8000:8000 \
-  -v faultline-vllm-cache-llm:/root/.cache/vllm \
-  "$VLLM_IMAGE" "$LLM_MODEL" "${LLM_ARGS[@]}" >/dev/null
-wait_healthy faultline-llm 8000
+start_llm() {
+  # $1 = "aiter" for the recommended MI300X attention backend, "baseline" without it.
+  local LLM_ARGS=(--host 0.0.0.0 --port 8000 --gpu-memory-utilization "$LLM_GPU_FRACTION")
+  local LLM_ENV=(-e VLLM_ENGINE_READY_TIMEOUT_S=3600)
+  case "$LLM_MODEL" in
+    openai/gpt-oss-*)
+      LLM_ARGS+=(--reasoning-parser openai_gptoss --tool-call-parser openai --enable-auto-tool-choice)
+      if [[ "$1" == "aiter" ]]; then
+        LLM_ENV+=(-e VLLM_ROCM_USE_AITER=1)
+        LLM_ARGS+=(--attention-backend ROCM_AITER_UNIFIED_ATTN)
+      fi
+      ;;
+    Qwen/Qwen3-*)
+      LLM_ARGS+=(--reasoning-parser qwen3 --default-chat-template-kwargs '{"enable_thinking": false}')
+      ;;
+  esac
+  docker rm -f faultline-llm >/dev/null 2>&1 || true
+  echo "vllm serve $LLM_MODEL ${LLM_ARGS[*]}" | tee /root/faultline/results/gpu/llm_serve_args.txt
+  docker run -d --name faultline-llm "${COMMON[@]}" "${LLM_ENV[@]}" -p 8000:8000 \
+    -v faultline-vllm-cache-llm:/root/.cache/vllm \
+    "$VLLM_IMAGE" "$LLM_MODEL" "${LLM_ARGS[@]}" >/dev/null
+  wait_healthy faultline-llm 8000
+}
+if ! start_llm aiter; then
+  echo "note: the LLM did not come up with the AITER attention backend; retrying with vLLM's default backend"
+  start_llm baseline
+fi
 
 echo "== starting the embedder: $EMBED_MODEL"
 docker run -d --name faultline-embed "${COMMON[@]}" -p 8001:8001 \
