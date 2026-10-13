@@ -1,0 +1,18 @@
+# Only the app, the prompts and the results it serves are needed to build.
+# Patterns are anchored to the repo root so they do not match inside apps/web.
+/.venv
+/data
+/models
+/tests
+/faultline
+/scripts
+/docs
+/results/eda/*.png
+/results/history
+node_modules
+.next
+/apps/web/.e2e
+/apps/web/test-results
+/apps/web/server-data
+/apps/web/public/data
+/apps/web/tests

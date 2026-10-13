@@ -6,6 +6,7 @@
 # data and model weights are rebuilt by the pipeline (see README)
 data/*
 !data/failures.csv
+!data/failures_metropt2.csv
 !data/README.md
 models/
 
@@ -31,3 +32,4 @@ next-env.d.ts
 .DS_Store
 .vercel
 *.log
+.gstack/
