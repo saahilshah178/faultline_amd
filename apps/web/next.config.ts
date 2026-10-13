@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/**/*": ["./server-data/**/*"],
   },
+  // `next dev` only serves its client bundles to the origin it was opened on. Allow the
+  // loopback address too, so http://127.0.0.1:3000 works the same as http://localhost:3000.
+  allowedDevOrigins: ["127.0.0.1"],
   devIndicators: false,
   poweredByHeader: false,
 };
