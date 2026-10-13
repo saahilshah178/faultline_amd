@@ -45,13 +45,18 @@ uv run python -m faultline.kb --embed
 step "6/6 explain every alarm"
 uv run python -m faultline.explain --force --concurrency "${EXPLAIN_CONCURRENCY:-4}"
 
+# Bring the numbers in README.md and docs/submission.md in step with the new results.
+uv run python -m faultline.report
+
 MINUTES=$(( ($(date +%s) - SESSION_START) / 60 ))
 cat <<MSG
 
 GPU session finished in ${MINUTES} minutes.
 
 Next:
-  git add -A results && git commit -m "Results from the MI300X run" && git push
+  git add -A results README.md docs && git commit -m "Results from the MI300X run" && git push
+                                    # the push redeploys the app with the new results
+  (cd apps/web && pnpm build && pnpm start) & (cd apps/web && pnpm cover)   # refresh docs/cover.png
   scripts/remote_teardown.sh        # stops the servers (optional; live mode needs them up)
 
 The droplet bills by the hour even when powered off. When you no longer need
