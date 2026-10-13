@@ -21,12 +21,12 @@ behind it, so it keeps working after the droplet is gone)
 
 ## The problem
 
-A compressed air leak does not trip a conventional alarm. Pressure stays in
-range, motor current stays in range, oil temperature creeps up but stays under
-its limit. What changes is the pattern: the compressor stops cycling and runs
-under load without a break, until someone notices or it fails. On a train, the
-air production unit has no backup, so a failure takes the vehicle out of
-service.
+A compressed air leak can run for hours without tripping a conventional alarm.
+Pressure stays in range, motor current stays in range, oil temperature climbs
+but stays under the limit a plant would set from past operation. What changes
+is the pattern: the compressor stops cycling and runs under load without a
+break, until someone notices or it fails. On a train, the air production unit
+has no backup, so a failure takes the vehicle out of service.
 
 Two things are missing in a plant that only has level alarms: something that
 notices the pattern, and something that tells the technician who gets the alert
@@ -323,6 +323,7 @@ faultline/        the pipeline (data, detector, alarms, baseline, evaluate, kb, 
 scripts/          droplet scripts and the smoke test
 prompts/          prompts and JSON schemas, shared by the pipeline and the app's live mode
 apps/web/         the Next.js app
+Dockerfile        the app as a container (docker build -t faultline . && docker run -p 3000:3000 faultline)
 results/          everything the app and this README show: bench, alerts, replay data, EDA plots
 data/             failures.csv and provenance notes; the dataset itself is downloaded
 docs/             unit description, submission notes

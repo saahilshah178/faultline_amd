@@ -11,6 +11,10 @@ interface Props {
   alarmId: string;
   signals: ReplaySignal[];
   topSignals: TopSignal[];
+  /** Show only these panels ("score", a unit such as "bar", or "errors"). All panels when omitted. */
+  panels?: string[];
+  /** Height override for the panels that are shown, by the same ids. */
+  heights?: Record<string, number>;
 }
 
 const EMPHASISED = 3;
@@ -35,7 +39,8 @@ function withGaps(win: AlarmWindow) {
   return { x, pick, typical, gaps: keep.filter((i) => i === null).length };
 }
 
-export function AlarmChart({ alarmId, signals, topSignals }: Props) {
+export function AlarmChart({ alarmId, signals, topSignals, panels, heights }: Props) {
+  const shows = (id: string) => !panels || panels.includes(id);
   const [win, setWin] = useState<AlarmWindow | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -121,31 +126,33 @@ export function AlarmChart({ alarmId, signals, topSignals }: Props) {
         <div className="panel chart-placeholder">Loading the alarm window</div>
       ) : (
         <>
+          {shows("score") ? (
           <TimePanel
             title="Detector score"
             unit="reconstruction error"
             note={view.note}
             series={scoreSeries}
-            height={150}
+            height={heights?.score ?? 150}
             syncKey={`alarm-${alarmId}`}
             yRange={(_min, max) => [0, Math.max((max ?? 0) * 1.1, view.threshold * 2)]}
             hline={{ value: view.threshold, label: `threshold ${view.threshold}`, color: STATUS.warning }}
             frame={view.score}
             testId="alarm-chart-score"
           />
-          {view.groups.map((g) => (
+          ) : null}
+          {view.groups.filter((g) => shows(g.unit)).map((g) => (
             <TimePanel
               key={g.unit}
               title={g.title}
               unit={g.unit}
               series={g.series}
-              height={g.series.length > 1 ? 200 : 130}
+              height={heights?.[g.unit] ?? (g.series.length > 1 ? 200 : 130)}
               syncKey={`alarm-${alarmId}`}
               frame={g.frame}
               testId={`alarm-chart-${g.unit === "bar" ? "pressure" : g.series[0].key}`}
             />
           ))}
-          {view.errors.series.length ? (
+          {view.errors.series.length && shows("errors") ? (
             <TimePanel
               title="Reconstruction error by signal"
               unit="error"
@@ -158,7 +165,7 @@ export function AlarmChart({ alarmId, signals, topSignals }: Props) {
               testId="alarm-chart-errors"
             />
           ) : null}
-          {view.gaps > 0 ? (
+          {view.gaps > 0 && !panels ? (
             <p className="hint">
               The unit stopped logging {view.gaps} time{view.gaps > 1 ? "s" : ""} in this window. Those stretches are left blank, not joined up.
             </p>

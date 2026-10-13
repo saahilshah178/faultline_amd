@@ -14,7 +14,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "node tests/e2e/prepare.mjs && playwright test"
+    "test:e2e": "node tests/e2e/prepare.mjs && playwright test",
+    "cover": "node scripts/make-cover.mjs"
   },
   "dependencies": {
     "ajv": "^8.20.0",
