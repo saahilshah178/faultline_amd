@@ -1,0 +1,5 @@
+id,start,end,failure,severity,maintenance,source_report_text
+F1,2020-04-18 00:00:00,2020-04-18 23:59:00,Air leak,High stress,,
+F2,2020-05-29 23:30:00,2020-05-30 06:00:00,Air leak,High stress,,Maintenance on 30Apr at 12:00
+F3,2020-06-05 10:00:00,2020-06-07 14:30:00,Air leak,High stress,2020-06-08 16:00:00,Maintenance on 8Jun at 16:00
+F4,2020-07-15 14:30:00,2020-07-15 19:00:00,Air leak,High stress,2020-07-16 00:00:00,Maintenance on 16Jul at 00:00
