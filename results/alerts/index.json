@@ -1,0 +1,437 @@
+[
+ {
+  "id": "A001",
+  "fire": "2020-03-06 22:15:08",
+  "end": "2020-03-06 23:07:10",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP2",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A002",
+  "fire": "2020-03-09 07:59:36",
+  "end": "2020-03-09 08:02:05",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP2",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A003",
+  "fire": "2020-03-11 05:47:53",
+  "end": "2020-03-11 06:14:58",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "H1",
+   "TP2"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A004",
+  "fire": "2020-03-12 00:49:48",
+  "end": "2020-03-12 11:57:06",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP2",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A005",
+  "fire": "2020-03-26 04:34:12",
+  "end": "2020-03-26 04:58:39",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A006",
+  "fire": "2020-03-27 08:09:10",
+  "end": "2020-03-27 11:44:18",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A007",
+  "fire": "2020-03-28 07:55:56",
+  "end": "2020-03-29 19:49:14",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A008",
+  "fire": "2020-04-12 12:21:35",
+  "end": "2020-04-12 23:43:36",
+  "attribution": "tuning_period",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP2",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A009",
+  "fire": "2020-04-13 19:11:47",
+  "end": "2020-04-13 19:27:16",
+  "attribution": "tuning_period",
+  "during_sustained_load": false,
+  "top_signals": [
+   "Oil_temperature",
+   "Motor_current",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A010",
+  "fire": "2020-04-18 01:25:36",
+  "end": "2020-04-19 02:03:42",
+  "attribution": "F1",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A011",
+  "fire": "2020-04-25 01:06:53",
+  "end": "2020-04-25 01:10:51",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "H1",
+   "Oil_temperature",
+   "Motor_current"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A012",
+  "fire": "2020-04-29 03:58:31",
+  "end": "2020-04-29 04:12:14",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "Oil_temperature",
+   "TP2"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A013",
+  "fire": "2020-05-13 14:14:38",
+  "end": "2020-05-14 00:56:48",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A014",
+  "fire": "2020-05-18 05:25:22",
+  "end": "2020-05-18 05:30:39",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A015",
+  "fire": "2020-05-19 02:21:53",
+  "end": "2020-05-19 02:40:33",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "H1",
+   "Reservoirs",
+   "TP3"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A016",
+  "fire": "2020-05-19 10:38:42",
+  "end": "2020-05-19 10:58:22",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A017",
+  "fire": "2020-05-19 22:53:30",
+  "end": "2020-05-20 19:48:20",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A018",
+  "fire": "2020-05-23 10:14:34",
+  "end": "2020-05-23 10:17:13",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A019",
+  "fire": "2020-05-26 10:14:38",
+  "end": "2020-05-28 03:16:28",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "Motor_current",
+   "Oil_temperature",
+   "H1"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A020",
+  "fire": "2020-05-29 23:46:09",
+  "end": "2020-05-30 06:04:52",
+  "attribution": "F2",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A021",
+  "fire": "2020-06-01 15:20:48",
+  "end": "2020-06-01 15:47:34",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A022",
+  "fire": "2020-06-02 19:49:17",
+  "end": "2020-06-02 19:54:35",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "H1",
+   "Oil_temperature",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A023",
+  "fire": "2020-06-03 10:38:04",
+  "end": "2020-06-03 11:18:33",
+  "attribution": "false_alarm",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A024",
+  "fire": "2020-06-05 10:20:53",
+  "end": "2020-06-08 13:07:12",
+  "attribution": "F3",
+  "during_sustained_load": true,
+  "top_signals": [
+   "DV_pressure",
+   "TP3",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A025",
+  "fire": "2020-07-08 18:09:43",
+  "end": "2020-07-08 19:25:03",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "Reservoirs",
+   "TP3",
+   "Motor_current"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A026",
+  "fire": "2020-07-14 02:32:17",
+  "end": "2020-07-14 03:03:30",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "H1",
+   "Motor_current",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A027",
+  "fire": "2020-07-15 12:52:23",
+  "end": "2020-07-15 18:58:41",
+  "attribution": "F4",
+  "during_sustained_load": false,
+  "top_signals": [
+   "DV_pressure",
+   "Reservoirs",
+   "TP3"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A028",
+  "fire": "2020-07-21 14:35:47",
+  "end": "2020-07-21 22:03:16",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "Motor_current",
+   "Oil_temperature",
+   "TP3"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ },
+ {
+  "id": "A029",
+  "fire": "2020-07-31 01:51:44",
+  "end": "2020-07-31 02:09:04",
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   "H1",
+   "Oil_temperature",
+   "Reservoirs"
+  ],
+  "summary": null,
+  "priority": null,
+  "has_explanation": false
+ }
+]

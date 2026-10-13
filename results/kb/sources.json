@@ -1,0 +1,20 @@
+[
+  {
+    "doc": "doe-sourcebook",
+    "title": "Improving Compressed Air System Performance: A Sourcebook for Industry (Third Edition)",
+    "publisher": "U.S. Department of Energy, Advanced Manufacturing Office, with the Compressed Air Challenge",
+    "url": "https://www.energy.gov/sites/prod/files/2016/03/f30/Improving%20Compressed%20Air%20Sourcebook%20version%203.pdf",
+    "page_label": "PDF page",
+    "chunks": 422,
+    "pages_indexed": 104
+  },
+  {
+    "doc": "apu-description",
+    "title": "The MetroPT-3 air production unit: description and normal operating profile",
+    "publisher": "Faultline (written from the MetroPT dataset documentation and pre-failure data)",
+    "url": "https://github.com/saahilshah178/faultline_amd/blob/main/docs/apu_description.md",
+    "page_label": "section",
+    "chunks": 7,
+    "pages_indexed": 6
+  }
+]

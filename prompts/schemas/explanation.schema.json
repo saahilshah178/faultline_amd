@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "likely_causes", "recommended_actions", "citations"],
+  "properties": {
+    "summary": { "type": "string" },
+    "likely_causes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cause", "evidence", "confidence"],
+        "properties": {
+          "cause": { "type": "string" },
+          "evidence": { "type": "string" },
+          "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "why", "urgency"],
+        "properties": {
+          "action": { "type": "string" },
+          "why": { "type": "string" },
+          "urgency": { "type": "string", "enum": ["now", "this_shift", "this_week"] }
+        }
+      }
+    },
+    "citations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["doc", "page", "quote"],
+        "properties": {
+          "doc": { "type": "string", "enum": ["doe-sourcebook", "apu-description"] },
+          "page": { "type": "integer" },
+          "quote": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "asset", "symptom", "suspected_cause", "steps", "parts_to_check", "priority", "priority_reason"],
+  "properties": {
+    "title": { "type": "string" },
+    "asset": { "type": "string" },
+    "symptom": { "type": "string" },
+    "suspected_cause": { "type": "string" },
+    "steps": { "type": "array", "minItems": 4, "maxItems": 8, "items": { "type": "string" } },
+    "parts_to_check": { "type": "array", "minItems": 1, "maxItems": 8, "items": { "type": "string" } },
+    "priority": { "type": "string", "enum": ["P1", "P2", "P3"] },
+    "priority_reason": { "type": "string" }
+  }
+}

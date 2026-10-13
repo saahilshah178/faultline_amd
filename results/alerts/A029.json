@@ -1,0 +1,403 @@
+{
+ "alarm": {
+  "id": "A029",
+  "fire": "2020-07-31 01:51:44",
+  "onset": "2020-07-31 01:21:40",
+  "end": "2020-07-31 02:09:04",
+  "active_minutes": 17.3,
+  "attribution": "false_alarm",
+  "during_sustained_load": false,
+  "top_signals": [
+   {
+    "signal": "H1",
+    "share": 0.7208,
+    "error": 6.1851
+   },
+   {
+    "signal": "Oil_temperature",
+    "share": 0.1129,
+    "error": 0.969
+   },
+   {
+    "signal": "Reservoirs",
+    "share": 0.0522,
+    "error": 0.4483
+   },
+   {
+    "signal": "TP3",
+    "share": 0.046,
+    "error": 0.3946
+   },
+   {
+    "signal": "Motor_current",
+    "share": 0.0457,
+    "error": 0.3925
+   },
+   {
+    "signal": "TP2",
+    "share": 0.0178,
+    "error": 0.1531
+   },
+   {
+    "signal": "DV_pressure",
+    "share": 0.0044,
+    "error": 0.0377
+   }
+  ]
+ },
+ "evidence": {
+  "alarm_id": "A029",
+  "asset": "Air production unit (oil-lubricated compressor with twin-tower dryer), Porto metro train, MetroPT-3 recording",
+  "fired_at": "2020-07-31 01:51:44",
+  "anomaly_began": "2020-07-31 01:21:40",
+  "minutes_from_onset_to_alarm": 30.1,
+  "window": {
+   "start": "2020-07-31 00:51:44",
+   "end": "2020-07-31 01:51:44",
+   "minutes": 60
+  },
+  "detector": {
+   "score_at_alarm": 1.5348,
+   "threshold": 0.2386,
+   "score_over_threshold": 6.43
+  },
+  "top_contributing_signals": [
+   {
+    "signal": "H1",
+    "share_of_error": 0.7208,
+    "unit": "bar",
+    "window": {
+     "mean": 3.72,
+     "min": -0.03,
+     "max": 10.16
+    },
+    "normal_p05_p95": [
+     -0.014,
+     9.896
+    ],
+    "under_load": {
+     "mean": -0.02,
+     "min": -0.03,
+     "max": -0.01,
+     "normal_p05_p95": [
+      -0.026,
+      -0.008
+     ],
+     "verdict": "within normal"
+    }
+   },
+   {
+    "signal": "Oil_temperature",
+    "share_of_error": 0.1129,
+    "unit": "°C",
+    "window": {
+     "mean": 56.34,
+     "min": 49.12,
+     "max": 69.65
+    },
+    "normal_p05_p95": [
+     50.325,
+     69.225
+    ],
+    "under_load": {
+     "mean": 58.8,
+     "min": 54.53,
+     "max": 64.38,
+     "normal_p05_p95": [
+      49.5,
+      71.975
+     ],
+     "verdict": "within normal"
+    }
+   },
+   {
+    "signal": "Reservoirs",
+    "share_of_error": 0.0522,
+    "unit": "bar",
+    "window": {
+     "mean": 7.87,
+     "min": 6.08,
+     "max": 10.22
+    },
+    "normal_p05_p95": [
+     8.152,
+     9.954
+    ],
+    "under_load": {
+     "mean": 9.21,
+     "min": 8.11,
+     "max": 10.22,
+     "normal_p05_p95": [
+      8.06,
+      10.084
+     ],
+     "verdict": "within normal"
+    }
+   },
+   {
+    "signal": "TP3",
+    "share_of_error": 0.046,
+    "unit": "bar",
+    "window": {
+     "mean": 7.87,
+     "min": 6.08,
+     "max": 10.22
+    },
+    "normal_p05_p95": [
+     8.15,
+     9.956
+    ],
+    "under_load": {
+     "mean": 9.22,
+     "min": 8.11,
+     "max": 10.22,
+     "normal_p05_p95": [
+      8.058,
+      10.088
+     ],
+     "verdict": "within normal"
+    }
+   }
+  ],
+  "signals": {
+   "TP2": {
+    "unit": "bar",
+    "window": {
+     "mean": 0.33,
+     "min": -0.03,
+     "max": 10.59
+    },
+    "normal_p05_p95": [
+     -0.018,
+     9.264
+    ],
+    "under_load": {
+     "mean": 9.47,
+     "min": 6.43,
+     "max": 10.59,
+     "normal_p05_p95": [
+      5.498,
+      10.414
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "TP3": {
+    "unit": "bar",
+    "window": {
+     "mean": 7.87,
+     "min": 6.08,
+     "max": 10.22
+    },
+    "normal_p05_p95": [
+     8.15,
+     9.956
+    ],
+    "under_load": {
+     "mean": 9.22,
+     "min": 8.11,
+     "max": 10.22,
+     "normal_p05_p95": [
+      8.058,
+      10.088
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "H1": {
+    "unit": "bar",
+    "window": {
+     "mean": 3.72,
+     "min": -0.03,
+     "max": 10.16
+    },
+    "normal_p05_p95": [
+     -0.014,
+     9.896
+    ],
+    "under_load": {
+     "mean": -0.02,
+     "min": -0.03,
+     "max": -0.01,
+     "normal_p05_p95": [
+      -0.026,
+      -0.008
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "DV_pressure": {
+    "unit": "bar",
+    "window": {
+     "mean": -0.02,
+     "min": -0.02,
+     "max": -0.02
+    },
+    "normal_p05_p95": [
+     -0.026,
+     -0.014
+    ],
+    "under_load": {
+     "mean": -0.02,
+     "min": -0.02,
+     "max": -0.02,
+     "normal_p05_p95": [
+      -0.026,
+      0.24
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "Reservoirs": {
+    "unit": "bar",
+    "window": {
+     "mean": 7.87,
+     "min": 6.08,
+     "max": 10.22
+    },
+    "normal_p05_p95": [
+     8.152,
+     9.954
+    ],
+    "under_load": {
+     "mean": 9.21,
+     "min": 8.11,
+     "max": 10.22,
+     "normal_p05_p95": [
+      8.06,
+      10.084
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "Oil_temperature": {
+    "unit": "°C",
+    "window": {
+     "mean": 56.34,
+     "min": 49.12,
+     "max": 69.65
+    },
+    "normal_p05_p95": [
+     50.325,
+     69.225
+    ],
+    "under_load": {
+     "mean": 58.8,
+     "min": 54.53,
+     "max": 64.38,
+     "normal_p05_p95": [
+      49.5,
+      71.975
+     ],
+     "verdict": "within normal"
+    }
+   },
+   "Motor_current": {
+    "unit": "A",
+    "window": {
+     "mean": 0.66,
+     "min": 0.02,
+     "max": 6.27
+    },
+    "normal_p05_p95": [
+     0.035,
+     5.952
+    ],
+    "under_load": {
+     "mean": 6.01,
+     "min": 5.3,
+     "max": 6.27,
+     "normal_p05_p95": [
+      5.162,
+      6.24
+     ],
+     "verdict": "within normal"
+    }
+   }
+  },
+  "compressor_duty": {
+   "under_load_share_last_30min": 0.0,
+   "under_load_share_last_60min": 0.036,
+   "under_load_share_last_2h": 0.067,
+   "normal_under_load_share_30min": {
+    "p50": 0.071,
+    "p95": 0.179,
+    "p99": 0.28
+   },
+   "continuous_load_minutes_at_alarm": 0.0,
+   "longest_loaded_run_minutes_last_60min": 2.0,
+   "normal_loaded_run_minutes": {
+    "p50": 1.817,
+    "p95": 2.817,
+    "p99": 5.45
+   },
+   "load_starts_last_2h": 2,
+   "normal_starts_per_hour": {
+    "p50": 2.0,
+    "p95": 5.0
+   },
+   "state_share_last_60min": {
+    "off": 0.852,
+    "offloaded": 0.113,
+    "loaded": 0.036
+   }
+  },
+  "digital_signals": {
+   "COMP": {
+    "share_on_last_60min": 0.42,
+    "normal_share_on": 0.9096,
+    "switches_last_60min": 3
+   },
+   "DV_eletric": {
+    "share_on_last_60min": 0.58,
+    "normal_share_on": 0.0887,
+    "switches_last_60min": 3
+   },
+   "Towers": {
+    "share_on_last_60min": 0.717,
+    "normal_share_on": 0.9538,
+    "switches_last_60min": 38
+   },
+   "MPG": {
+    "share_on_last_60min": 0.42,
+    "normal_share_on": 0.9096,
+    "switches_last_60min": 3
+   },
+   "LPS": {
+    "share_on_last_60min": 0.272,
+    "normal_share_on": 0.001,
+    "switches_last_60min": 1
+   },
+   "Pressure_switch": {
+    "share_on_last_60min": 1.0,
+    "normal_share_on": 0.9964,
+    "switches_last_60min": 0
+   },
+   "Oil_level": {
+    "share_on_last_60min": 1.0,
+    "normal_share_on": 0.9968,
+    "switches_last_60min": 0
+   },
+   "Caudal_impulses": {
+    "share_on_last_60min": 1.0,
+    "normal_share_on": 0.8551,
+    "switches_last_60min": 0
+   }
+  },
+  "trend": {
+   "oil_temperature_max_last_60min": 69.65,
+   "oil_temperature_mean_previous_24h": 65.22,
+   "reservoir_pressure_min_last_60min": 6.08,
+   "under_load_share_previous_24h": 0.128
+  },
+  "data_quality": {
+   "rows_in_window": 364,
+   "share_of_window_logged": 1.01
+  }
+ },
+ "explanation": null,
+ "work_order": null,
+ "chat_examples": [],
+ "retrieval": null,
+ "llm": null
+}
