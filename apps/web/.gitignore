@@ -1,0 +1,12 @@
+# Copied from ../../results and ../../prompts by scripts/sync-data.mjs. Never edit by hand.
+/public/data/
+/server-data/
+
+# Builds and test output
+/.next/
+/.e2e/
+/test-results/
+/playwright-report/
+node_modules/
+next-env.d.ts
+*.tsbuildinfo

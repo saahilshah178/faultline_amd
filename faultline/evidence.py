@@ -157,7 +157,9 @@ def build_evidence(df: pd.DataFrame, scores: pd.DataFrame, score: pd.Series, ala
         "trend": trend,
         "data_quality": {
             "rows_in_window": len(win),
-            "share_of_window_logged": r(len(win) / expected_rows, 2),
+            # Samples arrive every 9 to 13 s, so a fully logged hour can hold a few more
+            # than 360 rows.
+            "share_of_window_logged": r(min(1.0, len(win) / expected_rows), 2),
         },
     }
 

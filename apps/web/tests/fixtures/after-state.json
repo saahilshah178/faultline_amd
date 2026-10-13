@@ -1,0 +1,45 @@
+{
+  "_fixture": "TEST ONLY. Synthetic model output for the end-to-end tests: what an alert looks like after the pipeline has run. tests/e2e/prepare.mjs fills in citations from real KB chunks and merges this into a temp copy of one alert. Never copied into results/ or a normal build.",
+  "explanation": {
+    "summary": "[test fixture] Synthetic explanation summary used only by the end-to-end tests.",
+    "likely_causes": [
+      { "cause": "[test fixture] Synthetic cause A", "evidence": "[test fixture] synthetic evidence text, not a reading", "confidence": "high" },
+      { "cause": "[test fixture] Synthetic cause B", "evidence": "[test fixture] synthetic evidence text, not a reading", "confidence": "low" }
+    ],
+    "recommended_actions": [
+      { "action": "[test fixture] Synthetic action now", "why": "[test fixture] synthetic reason", "urgency": "now" },
+      { "action": "[test fixture] Synthetic action later", "why": "[test fixture] synthetic reason", "urgency": "this_week" }
+    ],
+    "citations": []
+  },
+  "work_order": {
+    "title": "[test fixture] Synthetic work order title",
+    "asset": "[test fixture] Synthetic asset",
+    "symptom": "[test fixture] Synthetic symptom",
+    "suspected_cause": "[test fixture] Synthetic suspected cause",
+    "steps": ["[test fixture] Step one", "[test fixture] Step two", "[test fixture] Step three", "[test fixture] Step four"],
+    "parts_to_check": ["[test fixture] Part A", "[test fixture] Part B"],
+    "priority": "P1",
+    "priority_reason": "[test fixture] Synthetic priority reason"
+  },
+  "chat_questions": [
+    "[test fixture] What should I check first when I get to the unit?",
+    "[test fixture] How can I confirm whether this is an air leak, and where it is?"
+  ],
+  "chat_answer_template": "[test fixture] Synthetic cached answer that cites a page {CITE}.",
+  "llm": {
+    "model": "fixture/not-a-real-run",
+    "generated_utc": "2000-01-01T00:00:00Z",
+    "explanation_attempts": 2,
+    "citations_validated": true,
+    "calls": [
+      { "purpose": "explain", "attempt": 1, "latency_s": 1.0, "prompt_tokens": 100, "completion_tokens": 50, "tokens_per_s": 50.0 },
+      { "purpose": "explain", "attempt": 2, "latency_s": 1.0, "prompt_tokens": 100, "completion_tokens": 50, "tokens_per_s": 50.0 }
+    ],
+    "wall_seconds": 2.0,
+    "llm_seconds": 2.0,
+    "prompt_tokens": 200,
+    "completion_tokens": 100,
+    "tokens_per_s": 50.0
+  }
+}

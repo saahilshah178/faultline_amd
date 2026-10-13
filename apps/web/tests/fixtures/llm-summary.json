@@ -1,0 +1,15 @@
+{
+  "_fixture": "TEST ONLY. Synthetic numbers for the end-to-end tests. Not a measurement of anything.",
+  "generated_utc": "2000-01-01T00:00:00Z",
+  "model": "fixture/not-a-real-run",
+  "alerts": 3,
+  "calls": 17,
+  "calls_rejected_and_retried": 2,
+  "prompt_tokens": 1000,
+  "completion_tokens": 500,
+  "tokens_per_s": { "note": "fixture note about tokens per second", "median": 111.1, "p10": 99.9, "p90": 122.2, "aggregate": 105.5 },
+  "seconds_per_alert": { "note": "fixture note", "median": 12.3, "max": 45.6 },
+  "gpu_price": { "usd_per_hour": 9.87, "instance": "fixture instance, not a real machine", "source": "https://example.com/fixture-price-source" },
+  "usd_per_alert": { "one_at_a_time": 0.0337, "note": "fixture note" },
+  "batch": { "alerts": 3, "wall_seconds": 20.0, "usd_per_alert": 0.0183, "note": "fixture note" }
+}
